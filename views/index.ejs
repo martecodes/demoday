@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>My bus</title>
+    <!-- MDB icon -->
+   
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" />
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
+    <!-- MDB -->
+    <link rel="stylesheet" href="mdb.min.css">
+</head>
+
+<body>
+    <!-- Start your project here-->
+    <!-- Pills navs -->
+    <nav class="container">
+        <ul class="nav nav-pills nav-fill mb-3" id="ex1" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="ex2-tab-1" data-mdb-toggle="pill" href="#ex2-pills-1" role="tab"
+                    aria-controls="ex2-pills-1" aria-selected="true">Home</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="ex2-tab-2" data-mdb-toggle="pill" href="#ex2-pills-2" role="tab"
+                    aria-controls="ex2-pills-2" aria-selected="false">My Bus</a>
+            </li>
+            
+        </ul>
+        <!-- Pills navs -->
+
+    </nav>
+    <div id=map></div>
+    <!-- Pills content -->
+    <div class="tab-content" id="ex2-content">
+        <div class="tab-pane fade show active" id="ex2-pills-1" role="tabpanel" aria-labelledby="ex2-tab-1">
+            <div class="container d-flex justify-content-center">
+                
+                <div class="card border" style="width: 22rem;">
+                    
+                    <div class="container d-flex justify-content-center">
+
+                        <img src="#" alt="weatherIcon" id="weatherIcon" class="card-img-top">
+                        <div class="card-body">
+                            
+                            <br>
+                            <span id="weatherText" class="card-text"></span>
+                            <br>
+                            <span id="weatherTemp" class="card-text"></span>
+                            <br>
+                            <span id="weatherLocation" class="card-text"></span>
+                        </div>
+
+                    </div>
+                </div>
+                
+            
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="ex2-pills-2" role="tabpanel" aria-labelledby="ex2-tab-2">
+            <div class= "d-flex justify-content-center">
+
+                <div class="card m-3 col-sm-3">
+    
+                        <a href="/login" class="btn btn-primary m-3">Login</a>
+                        <a href="/signup" class="btn btn-info m-3">Signup</a>
+               
+                </div>
+            </div>
+        </div>
+
+       
+    </div>
+    <!-- Pills content -->
+
+    <!-- MDB -->
+    <script type="text/javascript" src="mdb.min.js"></script>
+    <!-- Custom scripts -->
+    <script type="text/javascript"></script>
+    <script src="weather.js"></script>
+    <script src="main.js"></script>
+    
+</body>
+
+</html>
