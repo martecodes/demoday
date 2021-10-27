@@ -1,2 +1,0 @@
-# demoday
-bus tracker
