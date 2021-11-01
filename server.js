@@ -3,22 +3,24 @@
 // set up ======================================================================
 // get all the tools we need
 
-var express  = require('express');
-var app      = express();
-var port     = process.env.PORT || 3000;
+const express  = require('express');
+const app      = express();
+const port     = process.env.PORT || 3000;
 const MongoClient = require('mongodb').MongoClient
-var mongoose = require('mongoose');
-var passport = require('passport');
-var flash    = require('connect-flash');
+const mongoose = require('mongoose');
+const passport = require('passport');
+const flash    = require('connect-flash');
+const cors = require('cors')
 
-var morgan       = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser   = require('body-parser');
-var session      = require('express-session');
 
-var configDB = require('./config/database.js');
+const morgan       = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser   = require('body-parser');
+const session      = require('express-session');
 
-var db
+const configDB = require('./config/database.js');
+
+let db
 
 // configuration ===============================================================
 
@@ -36,6 +38,7 @@ app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.json()); // get information from html forms
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'))
+app.use(cors())
 
 
 app.set('view engine', 'ejs'); // set up ejs for templating
