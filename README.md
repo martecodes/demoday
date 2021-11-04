@@ -7,3 +7,4 @@ App that trucks your local bus current location
 How it's made Tech used: HTML, CSS, JavaScript, Bootstrap, Node.js, Express, MongoDB. Using these tools to create one of my favorite projects. Tracking the GPS IP to get live location of the Bus while you wait. 
 
 Lesson Learned No matter what your experience level, being an engineer means continuously learning. Learned a lot about GeoLocation.
+
