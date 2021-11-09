@@ -1,4 +1,7 @@
 module.exports = function(app, passport, db, cors) {
+  const fetch = require('node-fetch');
+  // curl - sN - H "accept: text/event-stream" - H "x-api-key: 6c7e8dcb17e44647ac1b58bdfd77e11a" "https://api-v3.mbta.com/predictions/?filter\\[route\\]=CR-Worcester&filter\\[stop\\]=place-sstat&stop_sequence=1"
+
 
 // normal routes ===============================================================
 
@@ -6,6 +9,19 @@ module.exports = function(app, passport, db, cors) {
     app.get('/', function(req, res) {
         res.render('index.ejs');
     });
+
+    app.get('/vehicles/:routeid',(req, res) => {
+      fetch(`https://api-v3.mbta.com/vehicles?filter%5Broute%5D=${req.params.routeid}`, {
+        headers: {
+          'x-api-key' : '6c7e8dcb17e44647ac1b58bdfd77e11a'
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data)
+          res.send(data)
+        });
+    })
 
     // PROFILE SECTION =========================
     app.get('/profile', isLoggedIn, function(req, res) {
@@ -18,13 +34,14 @@ module.exports = function(app, passport, db, cors) {
         })
     });
 
-    app.get('/routeone', isLoggedIn, function(req, res) {
+    app.get('/route/:routeid', isLoggedIn, function(req, res) {
         db.collection('messages').find().toArray((err, result) => {
           if (err) return console.log(err)
-          res.render('routeone.ejs', {
+          res.render('route.ejs', {
             user : req.user,
-            messages: result
+            routeid : req.params.routeid
           })
+          console.log(req.params.routeid);
         })
     });
 

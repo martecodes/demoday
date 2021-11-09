@@ -6,15 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>Route 1</title>
-    <!-- MDB icon -->
-    <link rel="icon" href="mdb-favicon.ico" type="image/x-icon" />
+   
+ 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" />
     <!-- Google Fonts Roboto -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
-    <!-- MDB -->
-    <link rel="stylesheet" href="mdb.min.css">
+
 
     <!-- leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
@@ -46,12 +45,12 @@
                 <a class="nav-link active" id="ex2-tab-1" data-mdb-toggle="pill" href="#ex2-pills-1" role="tab"
                     aria-controls="ex2-pills-1" aria-selected="true">Home</a>
             </li>
-            
+
             <li class="nav-item" role="presentation">
                 <a class="nav-link" id="ex2-tab-3" data-mdb-toggle="pill" href="#ex2-pills-3" role="tab"
                     aria-controls="ex2-pills-3" aria-selected="false">All Busses</a>
             </li>
-            
+
 
         </ul>
         <!-- Pills navs -->
@@ -61,25 +60,25 @@
     <!-- Pills content -->
     <div class="d-flex justify-content-center">
         <div id="map" class="w-75">
-    
+
         </div>
     </div>
-        <div class="tab-pane fade" id="ex2-pills-3" role="tabpanel" aria-labelledby="ex2-tab-3">
-            <div class="container d-flex justify-content-center">
-                <div class="row container col-sm-4">
-                    <a href="/routeone" type="button" class="btn btn-primary p-3 m-1">Route 1</a>
-                    <a href="/routetwo" type="button" class="btn btn-primary p-3 m-1">Route 2</a>
-                    <a href="/routethree" type="button" class="btn btn-primary p-3 m-1">Route 3</a>
-                    <a href="/logout" type="button" class="btn btn-danger p-3 m-1">Logout</a>
-                </div>
-
+    <div class="tab-pane fade" id="ex2-pills-3" role="tabpanel" aria-labelledby="ex2-tab-3">
+        <div class="container d-flex justify-content-center">
+            <div class="row container col-sm-4">
+                <a href="/route/CR-Worcester" type="button" class="btn btn-primary p-3 m-1">Worcester Commuter Rail</a>
+                <a href="/route/CR-Franklin" type="button" class="btn btn-primary p-3 m-1">Franklin Commuter Rail</a>
+                <a href="/route/CR-Fitchburg" type="button" class="btn btn-primary p-3 m-1">Fitchburg Commuter Rail</a>
+                <a href="/logout" type="button" class="btn btn-danger p-3 m-1">Logout</a>
             </div>
+
         </div>
+    </div>
     </div>
     <!-- Pills content -->
 
     <!-- MDB -->
-    <script type="text/javascript" src="mdb.min.js"></script>
+   
     <!-- Custom scripts -->
 
     <script>
@@ -87,33 +86,33 @@
         const map = L.map('map').setView([42.407211, -71.382439], 9);
 
         const userIcon = L.icon({
-            iconUrl: 'img/user.png',
+            iconUrl: '/img/user.png',
             iconSize: [25, 25],
             iconAnchor: [12.5, 12.5],
         });
 
         const busIcon = L.icon({
-                iconUrl: 'img/bus.png',
-                iconSize: [25, 25],
-                iconAnchor: [12.5, 12.5],
-            });
-            
-        const tiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                maxZoom: 18,
-                id: 'mapbox/streets-v11',
-                tileSize: 512,
-                zoomOffset: -1,
-                accessToken: 'pk.eyJ1IjoibWFydGVjb2RlcyIsImEiOiJja3ZwZG0zeDRlZ3lsMnptbjhiZ3NrbTFtIn0.vXc_RJA_QcE0YbvvDc28tA'
-            }).addTo(map);
+            iconUrl: '/img/bus.png',
+            iconSize: [25, 25],
+            iconAnchor: [12.5, 12.5],
+        });
 
-        if (!navigator.geolocation) {
-                console.log("Your browser doesn't support geolocation feature!")
-            } else {
-                setInterval(() => {
-                    navigator.geolocation.getCurrentPosition(getPosition)
-                }, 3000);
-            }
+        const tiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1IjoibWFydGVjb2RlcyIsImEiOiJja3ZwZG0zeDRlZ3lsMnptbjhiZ3NrbTFtIn0.vXc_RJA_QcE0YbvvDc28tA'
+        }).addTo(map);
+
+        // if (!navigator.geolocation) {
+        //         console.log("Your browser doesn't support geolocation feature!")
+        //     } else {
+        //         setInterval(() => {
+        //             navigator.geolocation.getCurrentPosition(getPosition)
+        //         }, 3000);
+        //     }
 
         let marker, circle, bus;
 
@@ -133,9 +132,9 @@
                 map.removeLayer(circle)
             }
 
-            marker = L.marker([42.3023902, -71.4096396],{icon: userIcon})
+            marker = L.marker([lat, long], { icon: userIcon })
             circle = L.circle([lat, long], { radius: accuracy })
-            bus = L.marker([lat, long], { icon: busIcon })
+
 
             let featureGroup = L.featureGroup([marker, circle, bus]).addTo(map)
 
@@ -143,6 +142,27 @@
 
             console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy)
         }
+
+        function showVehicles(routeid) {
+            console.log(routeid);
+            fetch(`/vehicles/${routeid}`)
+                .then(res => res.json())
+                .then(data => {
+
+                    const vehicles = []
+                    for (let i = 0; i < data.data.length; i++) {
+                        vehicles.push(L.marker([data.data[i].attributes.latitude, data.data[i].attributes.longitude], { icon: busIcon }))
+                    }
+
+                    let featureGroup = L.featureGroup(vehicles).addTo(map)
+                    map.fitBounds(featureGroup.getBounds())
+                    console.log(data.data);
+                })
+        }
+
+        setInterval(() => {
+            showVehicles('<%= routeid %>')
+        }, 3000);
 
     </script>
 </body>
