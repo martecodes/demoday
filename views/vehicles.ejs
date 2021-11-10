@@ -2,34 +2,60 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Vehicles</title>
+
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" />
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
+    <!-- leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+    <!-- bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+
+    <link rel="stylesheet" href="/main.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            width: 100%;
+            height: 60vh;
+        }
+    </style>
 </head>
 
 <body>
     <section class="m-3">
         <div class="d-flex  justify-content-center">
             <div class="d-flex justify-content-around">
-                <a href="/vehicles" class="btn btn-primary m-2">Vehicles</a>
-                <a href="/route" class="btn btn-primary m-2">Schedule</a>
+                <a href="/profile" class="btn btn-primary m-2">Home</a>
                 <a href="/logout" class="btn btn-secondary m-2">Logout</a>
             </div>
         </div>
-
+    
         <div class="d-flex justify-content-center">
             <!-- weather app -->
             <div class="container border" style="width: 22rem;">
-
+    
                 <div class="container d-flex justify-content-center">
-
+    
                     <img src="#" alt="weatherIcon" id="weatherIcon" class="card-img-top">
                     <div class="card-body">
-
+    
                         <br>
                         <span id="weatherText" class="card-text"></span>
                         <br>
@@ -37,16 +63,21 @@
                         <br>
                         <span id="weatherLocation" class="card-text"></span>
                     </div>
-
+    
                 </div>
             </div>
         </div>
+
+        <div class="d-flex justify-content-center m-3">
+            <a class="btn btn-outline-primary m-3" href="/subway">Subway</a>
+            <a class="btn btn-outline-primary m-3" href="/commuterRail">Commuter Rail</a>
+            <a class="btn btn-outline-primary m-3" href="/bus">Bus</a>
+        </div>
     </section>
 
+    <!-- Custom scripts -->
 
-
-    <script src="weather.js"></script>
-
+    <!-- bootstrap -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
@@ -56,6 +87,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+
+    <script src="weather.js"></script>
 </body>
 
 </html>

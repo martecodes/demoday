@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Route 1</title>
+    <title>Subway</title>
 
 
     <!-- Font Awesome -->
@@ -13,8 +13,6 @@
     <!-- Google Fonts Roboto -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
-
-
     <!-- leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -25,9 +23,8 @@
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    
-    <link rel="stylesheet" href="main.css">
 
+    <link rel="stylesheet" href="/main.css">
     <style>
         body {
             margin: 0;
@@ -42,74 +39,57 @@
 </head>
 
 <body>
-    <!-- Start your project here-->
-   
-    <nav class="d-flex justify-content-center">
+    <section class="m-3">
         <div class="d-flex  justify-content-center">
             <div class="d-flex justify-content-around">
                 <a href="/profile" class="btn btn-primary m-2">Home</a>
                 <a href="/logout" class="btn btn-secondary m-2">Logout</a>
             </div>
         </div>
-    </nav>
 
-    <!-- Pills content -->
-    <div class="d-flex justify-content-center">
-        <div id="map" class="w-75"></div>
-    </div>
-    </div>
+        <div class="d-flex justify-content-center">
+            <!-- weather app -->
+            <div class="container border" style="width: 22rem;">
+
+                <div class="container d-flex justify-content-center">
+
+                    <img src="#" alt="weatherIcon" id="weatherIcon" class="card-img-top">
+                    <div class="card-body">
+
+                        <br>
+                        <span id="weatherText" class="card-text"></span>
+                        <br>
+                        <span id="weatherTemp" class="card-text"></span>
+                        <br>
+                        <span id="weatherLocation" class="card-text"></span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center m-3">
+            <a class="btn btn-outline-primary m-2" href="/subway">Subway</a>
+            <a class="btn btn-outline-primary m-2" href="/bus">Bus</a>
+        </div>
+
+        <div>
+            <ul class="d-flex justify-content-around">
+                <li><a href="/route/Red" type="button" class="btn btn-primary p-3 m-1">Red Line</a></li>
+                <li><a href="/route/Mattapan" type="button" class="btn btn-primary p-3 m-1">Mattpan Trolley</a></li>
+                <li><a href="/route/Orange" type="button" class="btn btn-primary p-3 m-1">Orange Line</a></li>
+                <li><a href="/route/Blue" type="button" class="btn btn-primary p-3 m-1">Blue Line</a></li>
+                <li><a href="/route/Green-B" type="button" class="btn btn-primary p-3 m-1">Green B Line</a></li>
+                <li><a href="/route/Green-C" type="button" class="btn btn-primary p-3 m-1">Green C Line</a></li>
+                <li><a href="/route/Green-D" type="button" class="btn btn-primary p-3 m-1">Green D Line</a></li>
+                <li><a href="/route/Green-E" type="button" class="btn btn-primary p-3 m-1">Green E Line</a></li>
+            </ul>
+
+        </div>
+    </section>
 
     <!-- Custom scripts -->
 
-    <script>
-
-        // Map initialization 
-        const map = L.map('map').setView([42.407211, -72.382439], 11);
-
-        const userIcon = L.icon({
-            iconUrl: '/img/user.png',
-            iconSize: [15, 15],
-            iconAnchor: [7.5, 7.5],
-        });
-
-        const busIcon = L.icon({
-            iconUrl: '/img/bus.png',
-            iconSize: [15, 15],
-            iconAnchor: [7.5, 7.5],
-        });
-
-        const tiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-            maxZoom: 18,
-            id: 'mapbox/streets-v11',
-            tileSize: 512,
-            zoomOffset: -1,
-            accessToken: 'pk.eyJ1IjoibWFydGVjb2RlcyIsImEiOiJja3ZwZG0zeDRlZ3lsMnptbjhiZ3NrbTFtIn0.vXc_RJA_QcE0YbvvDc28tA'
-        }).addTo(map);
-
-
-        function showVehicles(routeid) {
-            fetch(`/vehicles/${routeid}`)
-                .then(res => res.json())
-                .then(data => {
-
-                    let vehicles = []
-                    L.featureGroup(vehicles).clearLayers()
-
-                    for (let i = 0; i < data.data.length; i++) {
-                        vehicles.push(L.marker([data.data[i].attributes.latitude, data.data[i].attributes.longitude], { icon: busIcon }))
-                    }
-
-                    let featureGroup = L.featureGroup(vehicles).addTo(map)
-
-                })
-        }
-
-        setInterval(() => {
-            showVehicles('<%= routeid %>')
-        }, 3000);
-
-    </script>
     <!-- bootstrap -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -120,7 +100,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-    
+
+    <script src="weather.js"></script>
 </body>
 
 </html>
