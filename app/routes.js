@@ -1,8 +1,10 @@
-module.exports = function (app, passport, db, cors) {
+module.exports = function (app, passport, db) {
   const fetch = require("node-fetch");
-  // curl - sN - H "accept: text/event-stream" - H "x-api-key: 6c7e8dcb17e44647ac1b58bdfd77e11a" "https://api-v3.mbta.com/predictions/?filter\\[route\\]=CR-Worcester&filter\\[stop\\]=place-sstat&stop_sequence=1"
-
-  // normal routes ===============================================================
+  const subwayRoutes = require("../subwayroutes.js")
+  const railRoutes = require("../railroutes.js")
+  const busRoutes = require("../busroutes.js")
+ 
+  //routes ===============================================================
 
   // show the home page (will also have our login links)
   app.get("/", function (req, res) {
@@ -22,15 +24,15 @@ module.exports = function (app, passport, db, cors) {
   });
 
   // PROFILE SECTION =========================
-  app.get("/profile", isLoggedIn, function (req, res) {
-    db.collection("messages")
-      .find()
-      .toArray((err, result) => {
-        if (err) return console.log(err);
-        res.render("profile.ejs", {
-          user: req.user,
-        });
-      });
+  app.get("/profile", isLoggedIn, async function (req, res) {
+    const favorites = await db
+      .collection("favorites")
+      .find({ email: req.user.local.email })
+      .toArray();
+    res.render("profile.ejs", {
+      user: req.user,
+      favorites: favorites[0].routesName
+    });
   });
 
   app.get("/route/:routeid", isLoggedIn, function (req, res) {
@@ -56,23 +58,67 @@ module.exports = function (app, passport, db, cors) {
       .collection("favorites")
       .find({ email: req.user.local.email })
       .toArray();
-
     res.render("subway.ejs", {
       user: req.user,
-      favorites: favorites[0].routes,
+      favorites: favorites[0].routesName,
+      subwayroutes: subwayRoutes
     });
   });
 
-  app.get("/commuterRail", isLoggedIn, function (req, res) {
+  app.get("/commuterRail", isLoggedIn, async function (req, res) {
+    const favorites = await db
+      .collection("favorites")
+      .find({ email: req.user.local.email })
+      .toArray();
     res.render("commuterRail.ejs", {
       user: req.user,
+      favorites: favorites[0].routesName,
+      railroutes: railRoutes
     });
   });
-  app.get("/bus", isLoggedIn, function (req, res) {
+
+  app.get("/bus", isLoggedIn, async function (req, res) {
+    const favorites = await db
+      .collection("favorites")
+      .find({ email: req.user.local.email })
+      .toArray();
     res.render("bus.ejs", {
       user: req.user,
+      favorites: favorites[0].routesName,
+      busroutes: busRoutes
     });
   });
+  app.put('/routeLikes', (req, res) => {
+    db.collection('favorites')
+      .findOneAndUpdate({ email: req.user.local.email }, {
+        $push: {
+          routesName: req.body.routeName
+        }
+      }, {
+        sort: { _id: -1 },
+        upsert: true
+      }, (err, result) => {
+        if (err) return res.send(err)
+        res.send(result)
+      })
+      console.log('like');
+  })
+
+  app.put('/routeUnLikes', (req, res) => {
+    db.collection('favorites')
+      .findOneAndUpdate({ email: req.user.local.email }, {
+        $pull: {
+          routesName: req.body.routeName
+        }
+      }, {
+        sort: { _id: -1 },
+        upsert: true
+      }, (err, result) => {
+        if (err) return res.send(err)
+        res.send(result)
+      })
+    console.log('unlike');
+  })
 
   // LOGOUT ==============================
   app.get("/logout", function (req, res) {

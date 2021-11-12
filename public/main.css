@@ -5,3 +5,13 @@
 ul{
     list-style: none;
 }
+
+.heart{
+    color: red;
+}
+
+.button-custom{
+    background-origin: 3%;
+    margin: 1%;
+    border-radius: 4%;
+}

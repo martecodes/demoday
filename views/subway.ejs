@@ -73,11 +73,22 @@
             <a class="btn btn-outline-primary m-2" href="/bus">Bus</a>
         </div>
 
-        <div>
-            <ul class="d-flex justify-content-around">
-                <% for (let route of favorites) { %> 
-                <li><a href="/route/Red" type="button" class="btn btn-primary p-3 m-1"><%=route.name%></a><i class="far fa-heart"></i></li>
-                <% } %> 
+        <div class=" d-flex justify-content-center">
+            <ul class="d-flex justify-content-between flex-wrap w-50">
+                <%for (let route of subwayroutes) { %>
+                    <div class="button-custom btn btn-primary">
+                    <li>
+                        <a href="/route/<%=route%>" type="button" class="btn btn-primary p-3 m-1">
+                            <%=route%>
+                        </a>
+                        <% if(favorites.includes(route)) {%>
+                            <i class="fas fa-heart heart"></i>
+                            <%} else{%>
+                                <i class="far fa-heart unHeart"></i>
+                                <%}%>
+                            </li>
+                        </div>
+                    <% } %>
             </ul>
 
         </div>
@@ -95,7 +106,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-
+    <script src="main.js"></script>
     <script src="weather.js"></script>
 </body>
 

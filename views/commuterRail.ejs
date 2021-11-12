@@ -75,14 +75,18 @@
 
         <div>
             <ul class="d-flex justify-content-around">
-                <li><a href="/route/Red" type="button" class="btn btn-primary p-3 m-1">Red Line</a></li>
-                <li><a href="/route/Mattapan" type="button" class="btn btn-primary p-3 m-1">Mattpan Trolley</a></li>
-                <li><a href="/route/Orange" type="button" class="btn btn-primary p-3 m-1">Orange Line</a></li>
-                <li><a href="/route/Blue" type="button" class="btn btn-primary p-3 m-1">Blue Line</a></li>
-                <li><a href="/route/Green-B" type="button" class="btn btn-primary p-3 m-1">Green B Line</a></li>
-                <li><a href="/route/Green-C" type="button" class="btn btn-primary p-3 m-1">Green C Line</a></li>
-                <li><a href="/route/Green-D" type="button" class="btn btn-primary p-3 m-1">Green D Line</a></li>
-                <li><a href="/route/Green-E" type="button" class="btn btn-primary p-3 m-1">Green E Line</a></li>
+                <%for (let route of railroutes) { %>
+                    <li>
+                        <a href="/route/<%=route%>" type="button" class="btn btn-primary p-3 m-1">
+                            <%=route%>
+                        </a>
+                        <% if(favorites.includes(route)) {%>
+                            <i class="fas fa-heart unHeart"></i>
+                            <%} else{%>
+                                <i class="far fa-heart heart"></i>
+                                <%}%>
+                    </li>
+                    <% } %>
             </ul>
 
         </div>

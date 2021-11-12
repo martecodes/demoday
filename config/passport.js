@@ -67,13 +67,13 @@ module.exports = function (passport, db) {
             });
 
             // Save routes associated with user
-            console.log("Im here");
-            const subways = ["red", "orange", "blue"];
+            
             db.collection("favorites").insertOne({
               email,
-              routes: subways.map((route) => {
-                return { name: route, isFavorite: false };
-              }),
+              routesName: []
+              //  subways.map((route) => {
+                // return { name: route, isFavorite: false };
+              // }),
             });
           }
         });
