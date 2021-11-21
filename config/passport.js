@@ -59,7 +59,7 @@ module.exports = function (passport, db) {
             // set the user's local credentials
             newUser.local.email = email;
             newUser.local.password = newUser.generateHash(password); // use the generateHash function in our user model
-
+            newUser.local.coords = { lat: req.body.lat, lng: req.body.lng }
             // save the user
             newUser.save(function (err) {
               if (err) throw err;

@@ -13,18 +13,22 @@
 </head>
 
 <body>
-    <section class="m-3">
-        <div class="d-flex  justify-content-center">
-            <div class="d-flex justify-content-around">
-                <a href="/vehicles" class="btn btn-primary m-2">Vehicles</a>
-                <a href="/route" class="btn btn-primary m-2">Schedule</a>
-                <a href="/logout" class="btn btn-secondary m-2">Logout</a>
-            </div>
-        </div>
-
+    <nav class="navbar  d-flex justify-content-center p-3" role="navigation">
+        <ul class="d-flex flex-row justify-content-around p-0">
+            <li>
+                <a href="/profile" class="m-1"><i class="fas fa-home nav-link"></i></a>
+            </li>
+        
+            <li>
+                <a href="/logout" class="m-1"><i class="fas fa-sign-out-alt nav-link"></i></a>
+            </li>
+        </ul>
+    </nav>
+    
+    <section>
         <div class="d-flex justify-content-center">
             <!-- weather app -->
-            <div class="container border" style="width: 22rem;">
+            <div class="container card weather mt-3" style="width: 22rem;">
 
                 <div class="container d-flex justify-content-center">
 
@@ -43,27 +47,34 @@
             </div>
         </div>
 
-        <div class=" d-flex flex-column align-items-center">
-            <div>
+        <div class="d-flex justify-content-center mt-2 vehicles">
+            <a class="btn btn-outline-light btn-lg m-1" href="/subway">Subway</a>
+            <a class="btn btn-outline-light btn-lg m-1" href="/commuterRail">Commuter Rail</a>
+            <a class="btn btn-outline-light btn-lg m-1" href="/bus">Bus</a>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class=" d-flex flex-column">
+                <h1 class="display-4 text-center">Favorite Routes</h1>
+                <div class="d-flex justify-content-center">
+
+                    <ul class="fav-ul d-flex justify-content-around flex-column fav-box">
+                        <%for (let route of favorites) { %>
+                            <li class="fav-list">
+                                <a href="/route/<%=route%>" type="button" class="btn btn-outline-light btn-lg m-1">
+                                    <%=route%>
+                                </a>
+                                <% if(favorites.includes(route)) {%>
+                                    <i class="fas fa-heart heart"></i>
+                                    <%} else{%>
+                                        <i class="far fa-heart unHeart"></i>
+                                        <%}%>
+                            </li>
+                            <% } %>
+                    </ul>
+                </div>
 
             </div>
-            <h1 class="display-4 text-center">Favorite Routes</h1>
-            <ul class="d-flex justify-content-around flex-wrap w-25">
-                <%for (let route of favorites) { %>
-                    <div class="button-custom btn btn-primary">
-                        <li>
-                            <a href="/route/<%=route%>" type="button" class="btn btn-primary p-3 m-1">
-                                <%=route%>
-                            </a>
-                            <% if(favorites.includes(route)) {%>
-                                <i class="fas fa-heart heart"></i>
-                                <%} else{%>
-                                    <i class="far fa-heart unHeart"></i>
-                                    <%}%>
-                        </li>
-                    </div>
-                    <% } %>
-            </ul>
+        </div>
     </section>
 
 

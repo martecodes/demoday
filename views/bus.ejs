@@ -39,227 +39,199 @@
 </head>
 
 <body>
+    <nav class="navbar fixed-top d-flex justify-content-center p-3" role="navigation">
+        <ul class="d-flex flex-row justify-content-around p-0">
+            <li>
+                <a href="/profile"><i class="fas fa-home nav-link"></i></a>
+            </li>
+            
+            <li>
+                <a href="/logout"><i class="fas fa-sign-out-alt nav-link"></i></a>
+            </li>
+        </ul>
+    </nav>
     <section class="m-3">
-        <div class="d-flex  justify-content-center">
-            <div class="d-flex justify-content-around">
-                <a href="/profile" class="btn btn-primary m-2">Home</a>
-                <a href="/logout" class="btn btn-secondary m-2">Logout</a>
-            </div>
-        </div>
-
-        <div class="d-flex justify-content-center">
-            <!-- weather app -->
-            <div class="container border" style="width: 22rem;">
-
-                <div class="container d-flex justify-content-center">
-
-                    <img src="#" alt="weatherIcon" id="weatherIcon" class="card-img-top">
-                    <div class="card-body">
-
-                        <br>
-                        <span id="weatherText" class="card-text"></span>
-                        <br>
-                        <span id="weatherTemp" class="card-text"></span>
-                        <br>
-                        <span id="weatherLocation" class="card-text"></span>
-                    </div>
-
-                </div>
-            </div>
-        </div>
+        
 
         <div class="d-flex justify-content-center m-3">
-            <a class="btn btn-outline-primary m-2" href="/subway">Subway</a>
-            <a class="btn btn-outline-primary m-2" href="/commuterRail">Commuter Rail</a>
+            <a class="btn btn-outline-light m-2" href="/subway">Subway</a>
+            <a class="btn btn-outline-light m-2" href="/commuterRail">Commuter Rail</a>
+        </div>
+
+        <div class="d-flex justify-content-center mt-2 vehicles mt-4">
+            <a class="btn btn-outline-light btn-lg m-1" href="/subway">Subway</a>
+            <a class="btn btn-outline-light btn-lg m-1" href="/commuterRail">Commuter Rail</a>
+            <a class="btn btn-outline-light btn-lg m-1" href="/bus">Bus</a>
         </div>
 
         <div>
             <h2 class="display-4">Silver Line</h2>
-            <ul class="d-flex flex-wrap">
+            <ul class="d-flex  flex-wrap">
                 <%for (let route of busroutes[0]) { %>
-                    <div class="button-custom btn btn-primary">
-                        <li>
-                            <a href="/route/<%=route%>" type="button" class="btn btn-primary p-3 m-1">
-                                <%=route%>
-                            </a>
-                            <% if(favorites.includes(route)) {%>
-                                <i class="fas fa-heart heart"></i>
-                                <%} else{%>
-                                    <i class="far fa-heart unHeart"></i>
-                                    <%}%>
-                        </li>
-                    </div>
+                    <li class="fav-list">
+                        <a href="/route/<%=route%>" type="button" class="btn btn-outline-light btn-lg m-1">
+                            <%=route%>
+                        </a>
+                        <% if(favorites.includes(route)) {%>
+                            <i class="fas fa-heart heart"></i>
+                            <%} else{%>
+                                <i class="far fa-heart unHeart"></i>
+                                <%}%>
+                    </li>
                     <% } %>
             </ul>
+
         </div>
         <div>
             <h2 class="display-4">Cross Town</h2>
-            <ul class="d-flex">
+            <ul class="d-flex  flex-wrap">
                 <%for (let route of busroutes[1]) { %>
-                    <div class="button-custom btn btn-primary">
-                        <li>
-                            <a href="/route/<%=route%>" type="button" class="btn btn-primary p-3 m-1">
-                                <%=route%>
-                            </a>
-                            <% if(favorites.includes(route)) {%>
-                                <i class="fas fa-heart heart"></i>
-                                <%} else{%>
-                                    <i class="far fa-heart unHeart"></i>
-                                    <%}%>
-                        </li>
-                    </div>
+                    <li class="fav-list">
+                        <a href="/route/<%=route%>" type="button" class="btn btn-outline-light btn-lg m-1">
+                            <%=route%>
+                        </a>
+                        <% if(favorites.includes(route)) {%>
+                            <i class="fas fa-heart heart"></i>
+                            <%} else{%>
+                                <i class="far fa-heart unHeart"></i>
+                                <%}%>
+                    </li>
                     <% } %>
             </ul>
         </div>
         <div>
             <h2 class="display-4">1 - 49</h2>
-            <ul class="d-flex flex-wrap">
+            <ul class="d-flex  flex-wrap">
                 <%for (let route of busroutes[2]) { %>
-                    <div class="button-custom btn btn-primary">
-                        <li>
-                            <a href="/route/<%=route%>" type="button" class="btn btn-primary p-3 m-1">
-                                <%=route%>
-                            </a>
-                            <% if(favorites.includes(route)) {%>
-                                <i class="fas fa-heart heart"></i>
-                                <%} else{%>
-                                    <i class="far fa-heart unHeart"></i>
-                                    <%}%>
-                        </li>
-                    </div>
+                    <li class="fav-list">
+                        <a href="/route/<%=route%>" type="button" class="btn btn-outline-light btn-lg m-1">
+                            <%=route%>
+                        </a>
+                        <% if(favorites.includes(route)) {%>
+                            <i class="fas fa-heart heart"></i>
+                            <%} else{%>
+                                <i class="far fa-heart unHeart"></i>
+                                <%}%>
+                    </li>
                     <% } %>
             </ul>
         </div>
         <div>
             <h2 class="display-4">50 - 99</h2>
-            <ul class="d-flex flex-wrap">
+            <ul class="d-flex  flex-wrap">
                 <%for (let route of busroutes[3]) { %>
-                    <div class="button-custom btn btn-primary">
-                        <li>
-                            <a href="/route/<%=route%>" type="button" class="btn btn-primary p-3 m-1">
-                                <%=route%>
-                            </a>
-                            <% if(favorites.includes(route)) {%>
-                                <i class="fas fa-heart heart"></i>
-                                <%} else{%>
-                                    <i class="far fa-heart unHeart"></i>
-                                    <%}%>
-                        </li>
-                    </div>
+                    <li class="fav-list">
+                        <a href="/route/<%=route%>" type="button" class="btn btn-outline-light btn-lg m-1">
+                            <%=route%>
+                        </a>
+                        <% if(favorites.includes(route)) {%>
+                            <i class="fas fa-heart heart"></i>
+                            <%} else{%>
+                                <i class="far fa-heart unHeart"></i>
+                                <%}%>
+                    </li>
                     <% } %>
             </ul>
         </div>
         <div>
             <h2 class="display-4">100s</h2>
-            <ul class="d-flex flex-wrap">
+            <ul class="d-flex  flex-wrap">
                 <%for (let route of busroutes[4]) { %>
-                    <div class="button-custom btn btn-primary">
-                        <li>
-                            <a href="/route/<%=route%>" type="button" class="btn btn-primary p-3 m-1">
-                                <%=route%>
-                            </a>
-                            <% if(favorites.includes(route)) {%>
-                                <i class="fas fa-heart heart"></i>
-                                <%} else{%>
-                                    <i class="far fa-heart unHeart"></i>
-                                    <%}%>
-                        </li>
-                    </div>
+                    <li class="fav-list">
+                        <a href="/route/<%=route%>" type="button" class="btn btn-outline-light btn-lg m-1">
+                            <%=route%>
+                        </a>
+                        <% if(favorites.includes(route)) {%>
+                            <i class="fas fa-heart heart"></i>
+                            <%} else{%>
+                                <i class="far fa-heart unHeart"></i>
+                                <%}%>
+                    </li>
                     <% } %>
             </ul>
         </div>
         <div>
             <h2 class="display-4">200s</h2>
-            <ul class="d-flex flex-wrap">
+            <ul class="d-flex  flex-wrap">
                 <%for (let route of busroutes[5]) { %>
-                    <div class="button-custom btn btn-primary">
-                        <li>
-                            <a href="/route/<%=route%>" type="button" class="btn btn-primary p-3 m-1">
-                                <%=route%>
-                            </a>
-                            <% if(favorites.includes(route)) {%>
-                                <i class="fas fa-heart heart"></i>
-                                <%} else{%>
-                                    <i class="far fa-heart unHeart"></i>
-                                    <%}%>
-                        </li>
-                    </div>
+                    <li class="fav-list">
+                        <a href="/route/<%=route%>" type="button" class="btn btn-outline-light btn-lg m-1">
+                            <%=route%>
+                        </a>
+                        <% if(favorites.includes(route)) {%>
+                            <i class="fas fa-heart heart"></i>
+                            <%} else{%>
+                                <i class="far fa-heart unHeart"></i>
+                                <%}%>
+                    </li>
                     <% } %>
             </ul>
         </div>
         <div>
             <h2 class="display-4">300s</h2>
-            <ul class="d-flex flex-wrap">
+            <ul class="d-flex  flex-wrap">
                 <%for (let route of busroutes[6]) { %>
-                    <div class="button-custom btn btn-primary">
-                        <li>
-                            <a href="/route/<%=route%>" type="button" class="btn btn-primary p-3 m-1">
-                                <%=route%>
-                            </a>
-                            <% if(favorites.includes(route)) {%>
-                                <i class="fas fa-heart heart"></i>
-                                <%} else{%>
-                                    <i class="far fa-heart unHeart"></i>
-                                    <%}%>
-                        </li>
-                    </div>
+                    <li class="fav-list">
+                        <a href="/route/<%=route%>" type="button" class="btn btn-outline-light btn-lg m-1">
+                            <%=route%>
+                        </a>
+                        <% if(favorites.includes(route)) {%>
+                            <i class="fas fa-heart heart"></i>
+                            <%} else{%>
+                                <i class="far fa-heart unHeart"></i>
+                                <%}%>
+                    </li>
                     <% } %>
             </ul>
         </div>
         <div>
             <h2 class="display-4">400s</h2>
-            <ul class="d-flex flex-wrap">
+            <ul class="d-flex  flex-wrap">
                 <%for (let route of busroutes[7]) { %>
-                    <div class="button-custom btn btn-primary">
-                        <li>
-                            <a href="/route/<%=route%>" type="button" class="btn btn-primary p-3 m-1">
-                                <%=route%>
-                            </a>
-                            <% if(favorites.includes(route)) {%>
-                                <i class="fas fa-heart heart"></i>
-                                <%} else{%>
-                                    <i class="far fa-heart unHeart"></i>
-                                    <%}%>
-                        </li>
-                    </div>
+                    <li class="fav-list">
+                        <a href="/route/<%=route%>" type="button" class="btn btn-outline-light btn-lg m-1">
+                            <%=route%>
+                        </a>
+                        <% if(favorites.includes(route)) {%>
+                            <i class="fas fa-heart heart"></i>
+                            <%} else{%>
+                                <i class="far fa-heart unHeart"></i>
+                                <%}%>
+                    </li>
                     <% } %>
             </ul>
         </div>
         <div>
             <h2 class="display-4">500s</h2>
-            <ul class="d-flex flex-wrap">
+            <ul class="d-flex  flex-wrap">
                 <%for (let route of busroutes[8]) { %>
-                    <div class="button-custom btn btn-primary">
-                        <li>
-                            <a href="/route/<%=route%>" type="button" class="btn btn-primary p-3 m-1">
-                                <%=route%>
-                            </a>
-                            <% if(favorites.includes(route)) {%>
-                                <i class="fas fa-heart heart"></i>
-                                <%} else{%>
-                                    <i class="far fa-heart unHeart"></i>
-                                    <%}%>
-                        </li>
-                    </div>
+                    <li class="fav-list">
+                        <a href="/route/<%=route%>" type="button" class="btn btn-outline-light btn-lg m-1">
+                            <%=route%>
+                        </a>
+                        <% if(favorites.includes(route)) {%>
+                            <i class="fas fa-heart heart"></i>
+                            <%} else{%>
+                                <i class="far fa-heart unHeart"></i>
+                                <%}%>
+                    </li>
                     <% } %>
             </ul>
         </div>
         <div>
             <h2 class="display-4">700s</h2>
-            <ul class="d-flex flex-wrap">
+            <ul class="d-flex  flex-wrap">
                 <%for (let route of busroutes[9]) { %>
-                    <div class="button-custom btn btn-primary">
-                        <li>
-                            <a href="/route/<%=route%>" type="button" class="btn btn-primary p-3 m-1">
-                                <%=route%>
-                            </a>
-                            <% if(favorites.includes(route)) {%>
-                                <i class="fas fa-heart heart"></i>
-                                <%} else{%>
-                                    <i class="far fa-heart unHeart"></i>
-                                    <%}%>
-                        </li>
-                    </div>
+                    <li class="fav-list">
+                        <a href="/route/<%=route%>" type="button" class="btn btn-outline-light btn-lg m-1">
+                            <%=route%>
+                        </a>
+                        <% if(favorites.includes(route)) {%>
+                            <i class="fas fa-heart heart"></i>
+                            <%} else{%>
+                                <i class="far fa-heart unHeart"></i>
+                                <%}%>
+                    </li>
                     <% } %>
             </ul>
         </div>

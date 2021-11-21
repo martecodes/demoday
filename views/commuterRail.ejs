@@ -39,51 +39,39 @@
 </head>
 
 <body>
+    <nav class="navbar  d-flex justify-content-center p-3" role="navigation">
+        <ul class="d-flex flex-row justify-content-around p-0">
+            <li>
+                <a href="/profile"><i class="fas fa-home nav-link"></i></a>
+            </li>
+            <li>
+                <a href="/vehicles"><i class="fas fa-bus nav-link"></i></a>
+            </li>
+            <li>
+                <a href="/schedule"><i class="fas fa-map nav-link"></i></a>
+            </li>
+            <li>
+                <a href="/logout"><i class="fas fa-sign-out-alt nav-link"></i></a>
+            </li>
+        </ul>
+    </nav>
     <section class="m-3">
-        <div class="d-flex  justify-content-center">
-            <div class="d-flex justify-content-around">
-                <a href="/profile" class="btn btn-primary m-2">Home</a>
-                <a href="/logout" class="btn btn-secondary m-2">Logout</a>
-            </div>
+        <div class="d-flex justify-content-center mt-2 vehicles">
+            <a class="btn btn-outline-light btn-lg m-1" href="/subway">Subway</a>
+            <a class="btn btn-outline-light btn-lg m-1" href="/commuterRail">Commuter Rail</a>
+            <a class="btn btn-outline-light btn-lg m-1" href="/bus">Bus</a>
         </div>
-
-        <div class="d-flex justify-content-center">
-            <!-- weather app -->
-            <div class="container border" style="width: 22rem;">
-
-                <div class="container d-flex justify-content-center">
-
-                    <img src="#" alt="weatherIcon" id="weatherIcon" class="card-img-top">
-                    <div class="card-body">
-
-                        <br>
-                        <span id="weatherText" class="card-text"></span>
-                        <br>
-                        <span id="weatherTemp" class="card-text"></span>
-                        <br>
-                        <span id="weatherLocation" class="card-text"></span>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <div class="d-flex justify-content-center m-3">
-            <a class="btn btn-outline-primary m-2" href="/subway">Subway</a>
-            <a class="btn btn-outline-primary m-2" href="/bus">Bus</a>
-        </div>
-
-        <div>
-            <ul class="d-flex justify-content-around">
+        <div class=" d-flex justify-content-center m-3">
+            <ul class=" d-flex flex-wrap">
                 <%for (let route of railroutes) { %>
-                    <li>
-                        <a href="/route/<%=route%>" type="button" class="btn btn-primary p-3 m-1">
+                    <li class="fav-list">
+                        <a href="/route/<%=route%>" type="button" class="btn btn-outline-light btn-lg m-1">
                             <%=route%>
                         </a>
                         <% if(favorites.includes(route)) {%>
-                            <i class="fas fa-heart unHeart"></i>
+                            <i class="fas fa-heart heart"></i>
                             <%} else{%>
-                                <i class="far fa-heart heart"></i>
+                                <i class="far fa-heart unHeart"></i>
                                 <%}%>
                     </li>
                     <% } %>
@@ -106,6 +94,7 @@
         crossorigin="anonymous"></script>
 
     <script src="weather.js"></script>
+    <script src="main.js"></script>
 </body>
 
 </html>

@@ -1,17 +1,135 @@
-.btn-outline-primary:hover{
-    background: rgb(63, 152, 248);
+@import url('https://fonts.googleapis.com/css2?family=Petemoss&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed&display=swap');
+
+
+.btn-outline-light:hover{
+    background: rgba(17, 63, 57, 0.733);
+}
+
+nav{
+    background: rgba(17, 63, 57, 0.931);
+}
+
+nav i{
+    font-size: 30px;
+    color: white;
+    
+}
+
+nav a:hover{
+    text-decoration: none;
+}
+
+nav i:hover{
+   transform: scale(1.5);
 }
 
 ul{
     list-style: none;
 }
 
+.login-links{
+    color: rgb(17,63,57);
+}
+
+.transpo{
+    font-family: 'Petemoss', cursive;
+    font-weight: bold;
+    font-size: 100px;
+    letter-spacing: 1px;
+    color: rgb(17,63,57);
+}
+
+h1{
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-size: 8s0px !important;
+}
+
 .heart{
     color: red;
 }
 
-.button-custom{
+.weather{
+    background: rgba(255, 255, 255, 0.26);
+    border: rgba(17, 63, 57, 0.445) solid 1px;
+}
+
+i{
+    cursor: pointer;
+}
+
+.fav-list a{
+    width: 80%;
+    background: rgb(17,63,57);
+    border-radius: 100px;
+}
+
+.fav-list a:hover{
+    transform: scale(1.06);
+}
+
+.vehicles a{
+    background: rgb(17,63,57);
+    border-radius: 100px;
+    color: white;
+}
+
+.vehicles a:hover{
+    transform: scale(1.06);
+}
+
+.vehicles button{
+    background: rgb(17,63,57);
+    border-radius: 100px;
+    color: white;
+}
+
+.fav-list{
+    display: flex;
+}
+
+.fav-list i{
+    font-size: 25px;
     background-origin: 3%;
     margin: 1%;
-    border-radius: 4%;
+    align-self: center;
+}
+
+.fav-list i:hover{
+   transform: scale(1.5);
+}
+
+.fav-ul{
+    width: 100%;
+}
+
+.hidden{
+    display: none;
+}
+
+
+
+.busIcons{
+    height: 50px;
+}
+
+
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #00000000;
+}
+
+::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #f5f5f500;
+}
+
+::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: rgb(17,63,57);
 }

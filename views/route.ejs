@@ -25,8 +25,8 @@
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    
-    <link rel="stylesheet" href="main.css">
+
+    <link rel="stylesheet" href="/main.css">
 
     <style>
         body {
@@ -36,47 +36,88 @@
 
         #map {
             width: 100%;
-            height: 60vh;
+            height: 70vh;
         }
     </style>
 </head>
 
 <body>
     <!-- Start your project here-->
-   
-    <nav class="d-flex justify-content-center">
-        <div class="d-flex  justify-content-center">
-            <div class="d-flex justify-content-around">
-                <a href="/profile" class="btn btn-primary m-2">Home</a>
-                <a href="/logout" class="btn btn-secondary m-2">Logout</a>
-            </div>
-        </div>
+
+    <nav class="navbar d-flex justify-content-center p-3" role="navigation">
+        <ul class="d-flex flex-row justify-content-around p-0">
+            <li>
+                <a href="/profile"><i class="fas fa-home nav-link"></i></a>
+            </li>
+          
+            <li>
+                <a href="/logout"><i class="fas fa-sign-out-alt nav-link"></i></a>
+            </li>
+        </ul>
     </nav>
 
+    <div class="d-flex justify-content-center mt-2 vehicles">
+        <a class="btn btn-outline-light btn-lg m-1" href="/subway">Subway</a>
+        <a class="btn btn-outline-light btn-lg m-1" href="/commuterRail">Commuter Rail</a>
+        <a class="btn btn-outline-light btn-lg m-1" href="/bus">Bus</a>
+    </div>
+
+    <div class="d-flex justify-content-center align-items-center">
+        <img src="/img/bus.png" alt="busInbound" class="busIcons">
+        <span class="mr-2">Inbound</span>
+        <img src="/img/bus-outbound.png" alt="busoutbound" class="busIcons">
+        <span>Outbound</span>
+    </div>
+
     <!-- Pills content -->
-    <div class="d-flex justify-content-center">
+    <div class="mt-2">
+        <p class="text-center">Click on user icon to check Transpo distance!</p>
+    </div>
+    <div class="d-flex justify-content-center mt-3">
         <div id="map" class="w-75"></div>
     </div>
-    </div>
+
 
     <!-- Custom scripts -->
 
     <script>
 
         // Map initialization 
-        const map = L.map('map').setView([42.407211, -72.382439], 11);
+        let lat;
+        let lng;
+
+        navigator.geolocation.getCurrentPosition(function (position) {
+            lat = position.coords.latitude;
+            lng = position.coords.longitude;
+        })
+
+        const map = L.map('map').setView([lat, lng], 14);
 
         const userIcon = L.icon({
             iconUrl: '/img/user.png',
-            iconSize: [15, 15],
-            iconAnchor: [7.5, 7.5],
+            iconSize: [40, 40],
+            iconAnchor: [20, 20],
         });
 
-        const busIcon = L.icon({
+        const userMarker = L.marker(
+            [lat, lng],
+            { icon: userIcon })
+            .addTo(map)
+
+        const userPing = [lat, lng]
+
+        const busInbound = L.icon({
             iconUrl: '/img/bus.png',
-            iconSize: [15, 15],
-            iconAnchor: [7.5, 7.5],
+            iconSize: [40, 40],
+            iconAnchor: [20, 20],
         });
+
+        const busOutbound = L.icon({
+                iconUrl: '/img/bus-outbound.png',
+                iconSize: [40, 40],
+                iconAnchor: [20, 20],
+            });
+
 
         const tiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -87,20 +128,43 @@
             accessToken: 'pk.eyJ1IjoibWFydGVjb2RlcyIsImEiOiJja3ZwZG0zeDRlZ3lsMnptbjhiZ3NrbTFtIn0.vXc_RJA_QcE0YbvvDc28tA'
         }).addTo(map);
 
+        let vehicles = []
+
+        let vehiclesPing = []
+
 
         function showVehicles(routeid) {
+            let distanceMessage = document.getElementById('distanceMessage')
+
             fetch(`/vehicles/${routeid}`)
                 .then(res => res.json())
                 .then(data => {
+                    console.log(data.data);
 
-                    let vehicles = []
-                    L.featureGroup(vehicles).clearLayers()
+                    for (let i = 0; i < vehicles.length; i++) {
+                        map.removeLayer(vehicles[i])
+                    }
+
+                    vehicles = []
+
+                    vehiclesPing = []
+
 
                     for (let i = 0; i < data.data.length; i++) {
-                        vehicles.push(L.marker([data.data[i].attributes.latitude, data.data[i].attributes.longitude], { icon: busIcon }))
+                        if(data.data[i].attributes.direction_id !== 0){
+                            vehicles.push(L.marker([data.data[i].attributes.latitude, data.data[i].attributes.longitude], { icon: busInbound }))
+                            vehiclesPing.push(data.data[i].attributes.latitude, data.data[i].attributes.longitude)
+                        }else{
+                            vehicles.push(L.marker([data.data[i].attributes.latitude, data.data[i].attributes.longitude], { icon: busOutbound }))
+                            vehiclesPing.push(data.data[i].attributes.latitude, data.data[i].attributes.longitude)
+                        }
                     }
 
                     let featureGroup = L.featureGroup(vehicles).addTo(map)
+                    
+                    let vehiclesDistance = distance(userPing[0], userPing[1], vehiclesPing[0], vehiclesPing[1], "M")
+
+                    userMarker.bindPopup(`Your Transpo is ${vehiclesDistance} miles away`)
 
                 })
         }
@@ -108,6 +172,31 @@
         setInterval(() => {
             showVehicles('<%= routeid %>')
         }, 3000);
+
+
+        function distance(lat1, lon1, lat2, lon2, unit) {
+            if ((lat1 == lat2) && (lon1 == lon2)) {
+                return 0;
+            }
+
+            else {
+                const radlat1 = Math.PI * lat1 / 180;
+                const radlat2 = Math.PI * lat2 / 180;
+                const theta = lon1 - lon2;
+                const radtheta = Math.PI * theta / 180;
+                let dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+                if (dist > 1) {
+                    dist = 1;
+                }
+                dist = Math.acos(dist);
+                dist = dist * 180 / Math.PI;
+                dist = dist * 60 * 1.1515;
+                if (unit == "K") { dist = dist * 1.609344 }
+                if (unit == "N") { dist = dist * 0.8684 }
+                return Math.round(dist * 10) / 10
+            }
+        }
+
 
     </script>
     <!-- bootstrap -->
@@ -120,7 +209,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-    
+
 </body>
 
 </html>

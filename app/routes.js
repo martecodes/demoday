@@ -23,6 +23,18 @@ module.exports = function (app, passport, db) {
       });
   });
 
+  app.get("/stopsId/", (req, res) => {
+    fetch(`https://api-v3.mbta.com/stops/${req.params.stopsId}`, {
+      headers: {
+        "x-api-key": "6c7e8dcb17e44647ac1b58bdfd77e11a",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        res.send(data);
+      });
+  });
+
   // PROFILE SECTION =========================
   app.get("/profile", isLoggedIn, async function (req, res) {
     const favorites = await db
@@ -31,7 +43,7 @@ module.exports = function (app, passport, db) {
       .toArray();
     res.render("profile.ejs", {
       user: req.user,
-      favorites: favorites[0].routesName
+      favorites: favorites[0].routesName.sort()
     });
   });
 

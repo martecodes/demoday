@@ -10,75 +10,38 @@
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" />
-    <!-- Google Fonts Roboto -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
-    <!-- leaflet -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-        crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-        crossorigin=""></script>
+   
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link rel="stylesheet" href="/main.css">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        #map {
-            width: 100%;
-            height: 60vh;
-        }
-    </style>
+    
 </head>
 
 <body>
+    <nav class="navbar  d-flex justify-content-center p-3" role="navigation">
+        <ul class="d-flex flex-row justify-content-around p-0">
+            <li>
+                <a href="/profile"><i class="fas fa-home nav-link"></i></a>
+            </li>
+            
+            <li>
+                <a href="/logout"><i class="fas fa-sign-out-alt nav-link"></i></a>
+            </li>
+        </ul>
+    </nav>
     <section class="m-3">
-        <div class="d-flex  justify-content-center">
-            <div class="d-flex justify-content-around">
-                <a href="/profile" class="btn btn-primary m-2">Home</a>
-                <a href="/logout" class="btn btn-secondary m-2">Logout</a>
-            </div>
+        <div class="d-flex justify-content-center mt-2 vehicles">
+            <a class="btn btn-outline-light btn-lg m-1" href="/subway">Subway</a>
+            <a class="btn btn-outline-light btn-lg m-1" href="/commuterRail">Commuter Rail</a>
+            <a class="btn btn-outline-light btn-lg m-1" href="/bus">Bus</a>
         </div>
-
-        <div class="d-flex justify-content-center">
-            <!-- weather app -->
-            <div class="container border" style="width: 22rem;">
-
-                <div class="container d-flex justify-content-center">
-
-                    <img src="#" alt="weatherIcon" id="weatherIcon" class="card-img-top">
-                    <div class="card-body">
-
-                        <br>
-                        <span id="weatherText" class="card-text"></span>
-                        <br>
-                        <span id="weatherTemp" class="card-text"></span>
-                        <br>
-                        <span id="weatherLocation" class="card-text"></span>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <div class="d-flex justify-content-center m-3">
-            <a class="btn btn-outline-primary m-2" href="/commuterRail">Commuter Rail</a>
-            <a class="btn btn-outline-primary m-2" href="/bus">Bus</a>
-        </div>
-
-        <div class=" d-flex justify-content-center">
-            <ul class="d-flex justify-content-between flex-wrap w-50">
+        <div class=" d-flex justify-content-center mt-3">
+            <ul class=" d-flex flex-wrap">
                 <%for (let route of subwayroutes) { %>
-                    <div class="button-custom btn btn-primary">
-                    <li>
-                        <a href="/route/<%=route%>" type="button" class="btn btn-primary p-3 m-1">
+                    <li class="fav-list">
+                        <a href="/route/<%=route%>" type="button" class="btn btn-outline-light btn-lg m-1">
                             <%=route%>
                         </a>
                         <% if(favorites.includes(route)) {%>
@@ -86,8 +49,7 @@
                             <%} else{%>
                                 <i class="far fa-heart unHeart"></i>
                                 <%}%>
-                            </li>
-                        </div>
+                    </li>
                     <% } %>
             </ul>
 
