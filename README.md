@@ -1,7 +1,8 @@
 # My Bus
 App that trucks your local bus current location 
 (3rd Draft)
-![demo](https://user-images.githubusercontent.com/88953222/141208239-cb89e40e-71a3-4ed5-a4d1-d87a620e7ceb.png)
+![Screenshot 2021-11-22 103921](https://user-images.githubusercontent.com/88953222/142890490-728952d5-3308-44e8-9ab0-046705cb95a2.png)
+
 
 
 
