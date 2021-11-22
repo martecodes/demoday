@@ -172,6 +172,7 @@
                             .then(res => res.json())
                             .then(data => {
                                 vehicles[i].bindPopup(`Transpo is on ${data.data.attributes.name}`)
+                            })
                             .catch(err => {
                                 console.log(`error ${err}`)
                             });
