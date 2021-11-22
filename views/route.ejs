@@ -49,7 +49,7 @@
             <li>
                 <a href="/profile"><i class="fas fa-home nav-link"></i></a>
             </li>
-          
+
             <li>
                 <a href="/logout"><i class="fas fa-sign-out-alt nav-link"></i></a>
             </li>
@@ -101,8 +101,8 @@
 
         const userMarker = L.marker(
             [lat, lng],
-            { icon: userIcon })
-            .addTo(map)
+            { icon: userIcon }).addTo(map)
+
 
         const userPing = [lat, lng]
 
@@ -113,10 +113,10 @@
         });
 
         const busOutbound = L.icon({
-                iconUrl: '/img/bus-outbound.png',
-                iconSize: [40, 40],
-                iconAnchor: [20, 20],
-            });
+            iconUrl: '/img/bus-outbound.png',
+            iconSize: [40, 40],
+            iconAnchor: [20, 20],
+        });
 
 
         const tiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -131,6 +131,7 @@
         let vehicles = []
 
         let vehiclesPing = []
+
 
 
         function showVehicles(routeid) {
@@ -151,17 +152,27 @@
 
 
                     for (let i = 0; i < data.data.length; i++) {
-                        if(data.data[i].attributes.direction_id !== 0){
+                        if (data.data[i].attributes.direction_id !== 0) {
                             vehicles.push(L.marker([data.data[i].attributes.latitude, data.data[i].attributes.longitude], { icon: busInbound }))
                             vehiclesPing.push(data.data[i].attributes.latitude, data.data[i].attributes.longitude)
-                        }else{
+                        } else {
                             vehicles.push(L.marker([data.data[i].attributes.latitude, data.data[i].attributes.longitude], { icon: busOutbound }))
                             vehiclesPing.push(data.data[i].attributes.latitude, data.data[i].attributes.longitude)
                         }
                     }
 
-                    let featureGroup = L.featureGroup(vehicles).addTo(map)
+                    for(let i = 0;i < data.data.length;i++){
+                        fetch(`https://api-v3.mbta.com/stops/${data.data[i].relationships.stop.data.id}`)
+                            .then(res => res.json())
+                            .then(data => {
+                                console.log(data);
+                                vehicles[i].bindPopup(`Transpo is on ${data.data.attributes.name}`)
+                            })
+                    }
                     
+                    let featureGroup = L.featureGroup(vehicles).addTo(map)
+                    // map.fitBounds(featureGroup.getBounds())
+
                     let vehiclesDistance = distance(userPing[0], userPing[1], vehiclesPing[0], vehiclesPing[1], "M")
 
                     userMarker.bindPopup(`Your Transpo is ${vehiclesDistance} miles away`)
