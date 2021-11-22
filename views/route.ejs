@@ -161,24 +161,23 @@
                         }
                     }
 
-                    // for(let i = 0;i < data.data.length;i++){
-                    //     let stopId;
-                        
-                    //     fetch(`https://api-v3.mbta.com/stops/${data.data[i].relationships.stop.data.id}`)
-                    //         .then(res => res.json())
-                    //         .then(data => {
-                    //             console.log(data);
-                    //             if(data.data.attributes.name !== undefined){
-                    //                 stopId = data.data.attributes.name
-                    //                 vehicles[i].bindPopup(`Transpo is on ${data.data.attributes.name}`)
+                    for (let i = 0; i < data.data.length; i++) {
+                        let stopId;
 
-                    //             }
-                    //         })
-                    //         .catch(err => {
-                    //             console.log(`error ${err}`)
-                    //         });
-                    // }
-                    
+                        fetch(`https://api-v3.mbta.com/stops/${data.data[i].relationships.stop.data.id}`, {
+                            headers: {
+                                "x-api-key": "6c7e8dcb17e44647ac1b58bdfd77e11a",
+                            }
+                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                vehicles[i].bindPopup(`Transpo is on ${data.data.attributes.name}`)
+                            .catch(err => {
+                                console.log(`error ${err}`)
+                            });
+                    }
+
+
                     let featureGroup = L.featureGroup(vehicles).addTo(map)
                     // map.fitBounds(featureGroup.getBounds())
 
