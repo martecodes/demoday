@@ -84,15 +84,11 @@
     <script>
 
         // Map initialization 
-        let lat;
-        let lng;
+        // let lat;
+        // let lng;
 
-        navigator.geolocation.getCurrentPosition(function (position) {
-            lat = position.coords.latitude;
-            lng = position.coords.longitude;
-        })
 
-        const map = L.map('map').setView([lat, lng], 14);
+        const map = L.map('map').setView([<%=user.local.coords.lat%>, <%=user.local.coords.lng %>], 14);
 
         const userIcon = L.icon({
             iconUrl: '/img/user.png',
@@ -101,11 +97,11 @@
         });
 
         const userMarker = L.marker(
-            [lat, lng],
+            [<%=user.local.coords.lat %>, <%=user.local.coords.lng %>],
             { icon: userIcon }).addTo(map)
 
 
-        const userPing = [lat, lng]
+        const userPing = [<%=user.local.coords.lat %>, <%=user.local.coords.lng %>]
 
         const busInbound = L.icon({
             iconUrl: '/img/bus.png',

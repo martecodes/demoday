@@ -52,6 +52,7 @@ module.exports = function (app, passport, db) {
   });
 
   app.get("/route/:routeid", isLoggedIn, function (req, res) {
+    console.log(req.user.local);
     db.collection("messages")
       .find()
       .toArray((err, result) => {
@@ -67,6 +68,10 @@ module.exports = function (app, passport, db) {
     res.render("vehicles.ejs", {
       user: req.user,
     });
+  });
+
+  app.get("/latlng", isLoggedIn, function (req, res) {
+     res.send(req.user)
   });
 
   app.get("/subway", isLoggedIn, async function (req, res) {

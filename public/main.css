@@ -24,12 +24,12 @@ nav i:hover{
    transform: scale(1.5);
 }
 
-ul{
-    list-style: none;
-}
-
 .login-links{
     color: rgb(17,63,57);
+}
+
+ul{
+    list-style: none;
 }
 
 .transpo{
@@ -119,6 +119,11 @@ i{
 
 .busIcons{
     height: 50px;
+}
+
+img{
+    height: 50px;
+    width: 50px;
 }
 
 
