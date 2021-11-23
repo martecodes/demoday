@@ -63,9 +63,10 @@
     </div>
 
     <div class="d-flex justify-content-center align-items-center">
-        <img src="/img/bus.png" alt="busInbound" class="busIcons">
+        <img src="/img/bus.png" alt="busInbound" class="busIcons" id="inbound">
         <span class="mr-2">Inbound</span>
-        <img src="/img/bus-outbound.png" alt="busoutbound" class="busIcons">
+
+        <img src="/img/bus-outbound.png" alt="busoutbound" class="busIcons" id="outbound">
         <span>Outbound</span>
     </div>
 
@@ -140,7 +141,6 @@
             fetch(`/vehicles/${routeid}`)
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data.data);
 
                     for (let i = 0; i < vehicles.length; i++) {
                         map.removeLayer(vehicles[i])
@@ -161,37 +161,43 @@
                         }
                     }
 
+                    let latCounter = 0
+                    let lngCounter = 1
+
+
                     for (let i = 0; i < data.data.length; i++) {
                         let stopId;
-                        if(data.data[i].relationships.stop.data === null){
-                            let stopId = data.data[0].relationships.stop.data.id
-                        }else{
+                        if (data.data[i].relationships.stop.data === null) {
+                            data.data[0].relationships.stop.data !== null ? stopId = data.data[0].relationships.stop.data.id : stopId = data.data[1].relationships.stop.data.id
+                        } else {
                             stopId = data.data[i].relationships.stop.data.id
                         }
-                        fetch(`https://api-v3.mbta.com/stops/${stopId}`, {
-                            headers: {
-                                "x-api-key": "6c7e8dcb17e44647ac1b58bdfd77e11a",
-                            }
+
+                        let transpoDistance = distance(userPing[0], userPing[1], vehiclesPing[latCounter], vehiclesPing[lngCounter], "M")
+                        
+                        fetch(`/stopsLocation/${stopId}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            vehicles[i].bindPopup(`<p>Transpo is on ${data.data.attributes.name}</p> <p>Your Transpo is ${transpoDistance} miles away</p>`)
                         })
-                            .then(res => res.json())
-                            .then(data => {
-                                console.log(data);
-                                vehicles[i].bindPopup(`Transpo is on ${data.data.attributes.name}`)
-                            })
-                            .catch(err => {
-                                console.log(`error ${err}`)
-                            });
+                        .catch(err => {
+                            console.log(`error ${err}`)
+                        });
+                        latCounter += 2
+                        lngCounter += 2
                     }
+
 
                     let featureGroup = L.featureGroup(vehicles).addTo(map)
                     // map.fitBounds(featureGroup.getBounds())
 
-                    let vehiclesDistance = distance(userPing[0], userPing[1], vehiclesPing[0], vehiclesPing[1], "M")
 
-                    userMarker.bindPopup(`Your Transpo is ${vehiclesDistance} miles away`)
+                    // userMarker.bindPopup(`Your Transpo is ${vehiclesDistance} miles away`)
 
                 })
         }
+
+        
 
         setInterval(() => {
             showVehicles('<%= routeid %>')
@@ -220,8 +226,6 @@
                 return Math.round(dist * 10) / 10
             }
         }
-
-
     </script>
     <!-- bootstrap -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

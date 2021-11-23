@@ -3,7 +3,7 @@ module.exports = function (app, passport, db) {
   const subwayRoutes = require("../subwayroutes.js")
   const railRoutes = require("../railroutes.js")
   const busRoutes = require("../busroutes.js")
- 
+
   //routes ===============================================================
 
   // show the home page (will also have our login links)
@@ -12,6 +12,7 @@ module.exports = function (app, passport, db) {
   });
 
   app.get("/vehicles/:routeid", (req, res) => {
+    
     fetch(`https://api-v3.mbta.com/vehicles?filter%5Broute%5D=${req.params.routeid}`, {
       headers: {
         "x-api-key": "6c7e8dcb17e44647ac1b58bdfd77e11a",
@@ -19,11 +20,25 @@ module.exports = function (app, passport, db) {
     })
       .then((res) => res.json())
       .then((data) => {
-        res.send(data);
+        res.send(data)
       });
   });
-  
 
+
+  app.get("/stopsLocation/:stopsId", (req, res) => {
+    fetch(`https://api-v3.mbta.com/stops/${req.params.stopsId}`, {
+      headers: {
+        "x-api-key": "6c7e8dcb17e44647ac1b58bdfd77e11a",
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        res.send(data)
+      })
+      .catch(err => {
+        console.log(`error ${err}`)
+      });
+  })
   // PROFILE SECTION =========================
   app.get("/profile", isLoggedIn, async function (req, res) {
     const favorites = await db
@@ -102,7 +117,7 @@ module.exports = function (app, passport, db) {
         if (err) return res.send(err)
         res.send(result)
       })
-      console.log('like');
+    console.log('like');
   })
 
   app.put('/routeUnLikes', (req, res) => {
