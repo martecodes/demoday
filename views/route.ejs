@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Route 1</title>
+    <title>My Transpo</title>
 
 
     <!-- Font Awesome -->
@@ -13,7 +13,6 @@
     <!-- Google Fonts Roboto -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
-
 
     <!-- leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
@@ -41,54 +40,57 @@
     </style>
 </head>
 
-<body>
+<body class="routepage">
     <!-- Start your project here-->
-
-    <nav class="navbar d-flex justify-content-center p-3" role="navigation">
+    <nav class="navbar routesCard d-flex justify-content-center p-3" role="navigation">
         <ul class="d-flex flex-row justify-content-around p-0">
             <li>
-                <a href="/profile"><i class="fas fa-home nav-link"></i></a>
+                <a href="/profile" class="m-1"><i class="fas fa-home nav-link"></i></a>
             </li>
 
-            <li>
-                <a href="/logout"><i class="fas fa-sign-out-alt nav-link"></i></a>
+            <li class="vehicles d-flex align-items-center"><a class="btn m-2" href="/subway">Subway</a></li>
+            <li class="vehicles d-flex align-items-center"><a class="btn m-2" href="/commuterRail">Commuter Rail</a>
             </li>
+            <li class="vehicles d-flex align-items-center"><a class="btn m-2" href="/bus">Bus</a></li>
+            <li>
+                <a href="/logout" class="m-1"><i class="fas fa-sign-out-alt nav-link"></i></a>
+            </li>
+            </div>
         </ul>
     </nav>
 
-    
-    <div class="d-flex justify-content-center align-items-center">
-        <img src="/img/bus.png" alt="busInbound" class="busIcons" id="inbound">
-        <span class="mr-2">Inbound</span>
-        
-        <img src="/img/bus-outbound.png" alt="busoutbound" class="busIcons" id="outbound">
-        <span>Outbound</span>
+    <div class=" d-flex justify-content-center">
+        <div class="col-sm-3 card p-3">
+            <div class="d-flex justify-content-center align-items-center">
+                <img src="/img/bus.png" alt="busInbound" class="busIcons" id="inbound">
+                <span class="mr-2">Inbound</span>
+
+                <img src="/img/bus-outbound.png" alt="busoutbound" class="busIcons" id="outbound">
+                <span>Outbound</span>
+            </div>
+
+            <!-- Pills content -->
+            <div class="mt-2">
+                <p id="routeNameDisplay" class="text-center"></p>
+                <p class="text-center">Click on the transpo icon to check Transpo distance!</p>
+            </div>
+
+        </div>
     </div>
-    
-    <!-- Pills content -->
-    <div class="mt-2">
-        <p class="text-center">Click on user icon to check Transpo distance!</p>
-    </div>
+
     <div class="d-flex justify-content-center mt-3">
         <div id="map" class="w-75"></div>
     </div>
-    
-    <div class="d-flex justify-content-center mt-2 vehicles">
-        <a class="btn btn-outline-light btn-lg m-1" href="/subway">Subway</a>
-        <a class="btn btn-outline-light btn-lg m-1" href="/commuterRail">Commuter Rail</a>
-        <a class="btn btn-outline-light btn-lg m-1" href="/bus">Bus</a>
-    </div>
+
+
+
 
     <!-- Custom scripts -->
 
     <script>
+        const routeNameDisplay = document.getElementById('routeNameDisplay')
 
-        // Map initialization 
-        // let lat;
-        // let lng;
-
-
-        const map = L.map('map').setView([<%=user.local.coords.lat%>, <%=user.local.coords.lng %>], 14);
+        const map = L.map('map').setView([<%=user.local.coords.lat %>, <%=user.local.coords.lng %>], 14);
 
         const userIcon = L.icon({
             iconUrl: '/img/user.png',
@@ -100,21 +102,27 @@
             [<%=user.local.coords.lat %>, <%=user.local.coords.lng %>],
             { icon: userIcon }).addTo(map)
 
-
-        const userPing = [<%=user.local.coords.lat %>, <%=user.local.coords.lng %>]
-
-        const busInbound = L.icon({
-            iconUrl: '/img/bus.png',
-            iconSize: [40, 40],
-            iconAnchor: [20, 20],
-        });
-
-        const busOutbound = L.icon({
+            
+            const userPing = [<%=user.local.coords.lat %>, <%=user.local.coords.lng %>]
+            
+            const busInbound = L.icon({
+                iconUrl: '/img/bus.png',
+                iconSize: [40, 40],
+                iconAnchor: [20, 20],
+            });
+            
+            const busOutbound = L.icon({
             iconUrl: '/img/bus-outbound.png',
             iconSize: [40, 40],
             iconAnchor: [20, 20],
         });
-
+        
+        const stopsIcon = L.icon({
+            iconUrl: '/img/stops.png',
+            iconSize: [40, 40],
+            iconAnchor: [20, 20],
+        })
+ 
 
         const tiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -126,10 +134,8 @@
         }).addTo(map);
 
         let vehicles = []
-
+        let stops = []
         let vehiclesPing = []
-
-
 
         function showVehicles(routeid) {
             let distanceMessage = document.getElementById('distanceMessage')
@@ -143,11 +149,11 @@
                     }
 
                     vehicles = []
-
                     vehiclesPing = []
-
-
+                    
+                    
                     for (let i = 0; i < data.data.length; i++) {
+                        routeNameDisplay.innerText = `Transpo Route: ${data.data[i].relationships.route.data.id}`
                         if (data.data[i].attributes.direction_id !== 0) {
                             vehicles.push(L.marker([data.data[i].attributes.latitude, data.data[i].attributes.longitude], { icon: busInbound }))
                             vehiclesPing.push(data.data[i].attributes.latitude, data.data[i].attributes.longitude)
@@ -156,44 +162,39 @@
                             vehiclesPing.push(data.data[i].attributes.latitude, data.data[i].attributes.longitude)
                         }
                     }
-
+                    
                     let latCounter = 0
                     let lngCounter = 1
-
-
-                    for (let i = 0; i < data.data.length; i++) {
+                    
+                    
+                    for (let i = 0; i < 1; i++) {
                         let stopId;
-                        if (data.data[i].relationships.stop.data === null) {
-                            data.data[0].relationships.stop.data !== null ? stopId = data.data[0].relationships.stop.data.id : stopId = data.data[1].relationships.stop.data.id
-                        } else {
-                            stopId = data.data[i].relationships.stop.data.id
-                        }
+                        stops = []
+                        stopId = data.data[i].relationships.route.data.id
 
                         let transpoDistance = distance(userPing[0], userPing[1], vehiclesPing[latCounter], vehiclesPing[lngCounter], "M")
-                        
+
                         fetch(`/stopsLocation/${stopId}`)
-                        .then(res => res.json())
-                        .then(data => {
-                            vehicles[i].bindPopup(`<p>Transpo is on ${data.data.attributes.name}</p> <p>Your Transpo is ${transpoDistance} miles away</p>`)
-                        })
-                        .catch(err => {
-                            console.log(`error ${err}`)
-                        });
+                            .then(res => res.json())
+                            .then(stopsData => {
+                                for(let i = 0;i < stopsData.data.length;i++){
+                                    stops.push(L.marker([stopsData.data[i].attributes.latitude, stopsData.data[i].attributes.longitude], { icon: stopsIcon }))
+                                }
+                            })
+                            .catch(err => {
+                                console.log(`error ${err}`)
+                            });
                         latCounter += 2
                         lngCounter += 2
                     }
-
-
-                    let featureGroup = L.featureGroup(vehicles).addTo(map)
-                    // map.fitBounds(featureGroup.getBounds())
-
-
-                    // userMarker.bindPopup(`Your Transpo is ${vehiclesDistance} miles away`)
+                    
+                  
+                    let featureGroup = L.featureGroup([vehicles, stops]).addTo(map)
 
                 })
         }
 
-        
+
 
         setInterval(() => {
             showVehicles('<%= routeid %>')

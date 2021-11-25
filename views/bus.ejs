@@ -14,12 +14,7 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
     <!-- leaflet -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-        crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-        crossorigin=""></script>
+   
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -38,204 +33,197 @@
     </style>
 </head>
 
-<body>
-    <nav class="navbar fixed-top d-flex justify-content-center p-3" role="navigation">
-        <ul class="d-flex flex-row justify-content-around p-0">
-            <li>
-                <a href="/profile"><i class="fas fa-home nav-link"></i></a>
-            </li>
-            
-            <li>
-                <a href="/logout"><i class="fas fa-sign-out-alt nav-link"></i></a>
-            </li>
-        </ul>
-    </nav>
-    <section class="m-3">
-        
+<body class="routepage">
+    <div class="routesCard">
 
-        <div class="d-flex justify-content-center m-3">
-            <a class="btn btn-outline-light m-2" href="/subway">Subway</a>
-            <a class="btn btn-outline-light m-2" href="/commuterRail">Commuter Rail</a>
-        </div>
+        <nav class="navbar  d-flex justify-content-center p-3" role="navigation">
+            <ul class="d-flex flex-row justify-content-around p-0">
+                <li>
+                    <a href="/profile"><i class="fas fa-home nav-link"></i></a>
+                </li>
+                <li class="vehicles"><a class="btn m-2" href="/subway">Subway</a></li>
+                <li class="vehicles"><a class="btn m-2" href="/commuterRail">Commuter Rail</a></li>
+                
+                <li>
+                    <a href="/logout"><i class="fas fa-sign-out-alt nav-link"></i></a>
+                </li>
+            </ul>
+        </nav>
 
-        <div class="d-flex justify-content-center mt-2 vehicles mt-4">
-            <a class="btn btn-outline-light btn-lg m-1" href="/subway">Subway</a>
-            <a class="btn btn-outline-light btn-lg m-1" href="/commuterRail">Commuter Rail</a>
-            <a class="btn btn-outline-light btn-lg m-1" href="/bus">Bus</a>
-        </div>
-
-        <div>
-            <h2 class="display-4">Silver Line</h2>
-            <ul class="d-flex  flex-wrap">
-                <%for (let route of busroutes[0]) { %>
-                    <li class="fav-list">
-                        <a href="/route/<%=route%>" type="button" class="btn btn-outline-light btn-lg m-1">
-                            <%=route%>
-                        </a>
-                        <% if(favorites.includes(route)) {%>
-                            <i class="fas fa-heart heart"></i>
-                            <%} else{%>
-                                <i class="far fa-heart unHeart"></i>
-                                <%}%>
-                    </li>
-                    <% } %>
-            </ul>
-
-        </div>
-        <div>
-            <h2 class="display-4">Cross Town</h2>
-            <ul class="d-flex  flex-wrap">
-                <%for (let route of busroutes[1]) { %>
-                    <li class="fav-list">
-                        <a href="/route/<%=route%>" type="button" class="btn btn-outline-light btn-lg m-1">
-                            <%=route%>
-                        </a>
-                        <% if(favorites.includes(route)) {%>
-                            <i class="fas fa-heart heart"></i>
-                            <%} else{%>
-                                <i class="far fa-heart unHeart"></i>
-                                <%}%>
-                    </li>
-                    <% } %>
-            </ul>
-        </div>
-        <div>
-            <h2 class="display-4">1 - 49</h2>
-            <ul class="d-flex  flex-wrap">
-                <%for (let route of busroutes[2]) { %>
-                    <li class="fav-list">
-                        <a href="/route/<%=route%>" type="button" class="btn btn-outline-light btn-lg m-1">
-                            <%=route%>
-                        </a>
-                        <% if(favorites.includes(route)) {%>
-                            <i class="fas fa-heart heart"></i>
-                            <%} else{%>
-                                <i class="far fa-heart unHeart"></i>
-                                <%}%>
-                    </li>
-                    <% } %>
-            </ul>
-        </div>
-        <div>
-            <h2 class="display-4">50 - 99</h2>
-            <ul class="d-flex  flex-wrap">
-                <%for (let route of busroutes[3]) { %>
-                    <li class="fav-list">
-                        <a href="/route/<%=route%>" type="button" class="btn btn-outline-light btn-lg m-1">
-                            <%=route%>
-                        </a>
-                        <% if(favorites.includes(route)) {%>
-                            <i class="fas fa-heart heart"></i>
-                            <%} else{%>
-                                <i class="far fa-heart unHeart"></i>
-                                <%}%>
-                    </li>
-                    <% } %>
-            </ul>
-        </div>
-        <div>
-            <h2 class="display-4">100s</h2>
-            <ul class="d-flex  flex-wrap">
-                <%for (let route of busroutes[4]) { %>
-                    <li class="fav-list">
-                        <a href="/route/<%=route%>" type="button" class="btn btn-outline-light btn-lg m-1">
-                            <%=route%>
-                        </a>
-                        <% if(favorites.includes(route)) {%>
-                            <i class="fas fa-heart heart"></i>
-                            <%} else{%>
-                                <i class="far fa-heart unHeart"></i>
-                                <%}%>
-                    </li>
-                    <% } %>
-            </ul>
-        </div>
-        <div>
-            <h2 class="display-4">200s</h2>
-            <ul class="d-flex  flex-wrap">
-                <%for (let route of busroutes[5]) { %>
-                    <li class="fav-list">
-                        <a href="/route/<%=route%>" type="button" class="btn btn-outline-light btn-lg m-1">
-                            <%=route%>
-                        </a>
-                        <% if(favorites.includes(route)) {%>
-                            <i class="fas fa-heart heart"></i>
-                            <%} else{%>
-                                <i class="far fa-heart unHeart"></i>
-                                <%}%>
-                    </li>
-                    <% } %>
-            </ul>
-        </div>
-        <div>
-            <h2 class="display-4">300s</h2>
-            <ul class="d-flex  flex-wrap">
-                <%for (let route of busroutes[6]) { %>
-                    <li class="fav-list">
-                        <a href="/route/<%=route%>" type="button" class="btn btn-outline-light btn-lg m-1">
-                            <%=route%>
-                        </a>
-                        <% if(favorites.includes(route)) {%>
-                            <i class="fas fa-heart heart"></i>
-                            <%} else{%>
-                                <i class="far fa-heart unHeart"></i>
-                                <%}%>
-                    </li>
-                    <% } %>
-            </ul>
-        </div>
-        <div>
-            <h2 class="display-4">400s</h2>
-            <ul class="d-flex  flex-wrap">
-                <%for (let route of busroutes[7]) { %>
-                    <li class="fav-list">
-                        <a href="/route/<%=route%>" type="button" class="btn btn-outline-light btn-lg m-1">
-                            <%=route%>
-                        </a>
-                        <% if(favorites.includes(route)) {%>
-                            <i class="fas fa-heart heart"></i>
-                            <%} else{%>
-                                <i class="far fa-heart unHeart"></i>
-                                <%}%>
-                    </li>
-                    <% } %>
-            </ul>
-        </div>
-        <div>
-            <h2 class="display-4">500s</h2>
-            <ul class="d-flex  flex-wrap">
-                <%for (let route of busroutes[8]) { %>
-                    <li class="fav-list">
-                        <a href="/route/<%=route%>" type="button" class="btn btn-outline-light btn-lg m-1">
-                            <%=route%>
-                        </a>
-                        <% if(favorites.includes(route)) {%>
-                            <i class="fas fa-heart heart"></i>
-                            <%} else{%>
-                                <i class="far fa-heart unHeart"></i>
-                                <%}%>
-                    </li>
-                    <% } %>
-            </ul>
-        </div>
-        <div>
-            <h2 class="display-4">700s</h2>
-            <ul class="d-flex  flex-wrap">
-                <%for (let route of busroutes[9]) { %>
-                    <li class="fav-list">
-                        <a href="/route/<%=route%>" type="button" class="btn btn-outline-light btn-lg m-1">
-                            <%=route%>
-                        </a>
-                        <% if(favorites.includes(route)) {%>
-                            <i class="fas fa-heart heart"></i>
-                            <%} else{%>
-                                <i class="far fa-heart unHeart"></i>
-                                <%}%>
-                    </li>
-                    <% } %>
-            </ul>
-        </div>
-    </section>
+        <section class="mt-5">
+            <div>
+                <h2 class="display-4 text-light">Silver Line</h2>
+                <ul class="d-flex  flex-wrap">
+                    <%for (let route of busroutes[0]) { %>
+                        <li class="vehicles">
+                            <a href="/route/<%=route%>" type="button" class="btn btn-lg m-1">
+                                <%=route%>
+                            </a>
+                            <% if(favorites.includes(route)) {%>
+                                <i class="fas fa-heart heart"></i>
+                                <%} else{%>
+                                    <i class="far fa-heart unHeart"></i>
+                                    <%}%>
+                        </li>
+                        <% } %>
+                </ul>
+    
+            </div>
+            <div>
+                <h2 class="display-4 text-light">Cross Town</h2>
+                <ul class="d-flex  flex-wrap">
+                    <%for (let route of busroutes[1]) { %>
+                        <li class="vehicles">
+                            <a href="/route/<%=route%>" type="button" class="btn btn-lg m-1">
+                                <%=route%>
+                            </a>
+                            <% if(favorites.includes(route)) {%>
+                                <i class="fas fa-heart heart"></i>
+                                <%} else{%>
+                                    <i class="far fa-heart unHeart"></i>
+                                    <%}%>
+                        </li>
+                        <% } %>
+                </ul>
+            </div>
+            <div>
+                <h2 class="display-4 text-light">1 - 49</h2>
+                <ul class="d-flex  flex-wrap">
+                    <%for (let route of busroutes[2]) { %>
+                        <li class="vehicles">
+                            <a href="/route/<%=route%>" type="button" class="btn btn-lg m-1">
+                                <%=route%>
+                            </a>
+                            <% if(favorites.includes(route)) {%>
+                                <i class="fas fa-heart heart"></i>
+                                <%} else{%>
+                                    <i class="far fa-heart unHeart"></i>
+                                    <%}%>
+                        </li>
+                        <% } %>
+                </ul>
+            </div>
+            <div>
+                <h2 class="display-4 text-light">50 - 99</h2>
+                <ul class="d-flex  flex-wrap">
+                    <%for (let route of busroutes[3]) { %>
+                        <li class="vehicles">
+                            <a href="/route/<%=route%>" type="button" class="btn btn-lg m-1">
+                                <%=route%>
+                            </a>
+                            <% if(favorites.includes(route)) {%>
+                                <i class="fas fa-heart heart"></i>
+                                <%} else{%>
+                                    <i class="far fa-heart unHeart"></i>
+                                    <%}%>
+                        </li>
+                        <% } %>
+                </ul>
+            </div>
+            <div>
+                <h2 class="display-4 text-light">100s</h2>
+                <ul class="d-flex  flex-wrap">
+                    <%for (let route of busroutes[4]) { %>
+                        <li class="vehicles">
+                            <a href="/route/<%=route%>" type="button" class="btn btn-lg m-1">
+                                <%=route%>
+                            </a>
+                            <% if(favorites.includes(route)) {%>
+                                <i class="fas fa-heart heart"></i>
+                                <%} else{%>
+                                    <i class="far fa-heart unHeart"></i>
+                                    <%}%>
+                        </li>
+                        <% } %>
+                </ul>
+            </div>
+            <div>
+                <h2 class="display-4 text-light">200s</h2>
+                <ul class="d-flex  flex-wrap">
+                    <%for (let route of busroutes[5]) { %>
+                        <li class="vehicles">
+                            <a href="/route/<%=route%>" type="button" class="btn btn-lg m-1">
+                                <%=route%>
+                            </a>
+                            <% if(favorites.includes(route)) {%>
+                                <i class="fas fa-heart heart"></i>
+                                <%} else{%>
+                                    <i class="far fa-heart unHeart"></i>
+                                    <%}%>
+                        </li>
+                        <% } %>
+                </ul>
+            </div>
+            <div>
+                <h2 class="display-4 text-light">300s</h2>
+                <ul class="d-flex  flex-wrap">
+                    <%for (let route of busroutes[6]) { %>
+                        <li class="vehicles">
+                            <a href="/route/<%=route%>" type="button" class="btn btn-lg m-1">
+                                <%=route%>
+                            </a>
+                            <% if(favorites.includes(route)) {%>
+                                <i class="fas fa-heart heart"></i>
+                                <%} else{%>
+                                    <i class="far fa-heart unHeart"></i>
+                                    <%}%>
+                        </li>
+                        <% } %>
+                </ul>
+            </div>
+            <div>
+                <h2 class="display-4 text-light">400s</h2>
+                <ul class="d-flex  flex-wrap">
+                    <%for (let route of busroutes[7]) { %>
+                        <li class="vehicles">
+                            <a href="/route/<%=route%>" type="button" class="btn btn-lg m-1">
+                                <%=route%>
+                            </a>
+                            <% if(favorites.includes(route)) {%>
+                                <i class="fas fa-heart heart"></i>
+                                <%} else{%>
+                                    <i class="far fa-heart unHeart"></i>
+                                    <%}%>
+                        </li>
+                        <% } %>
+                </ul>
+            </div>
+            <div>
+                <h2 class="display-4 text-light">500s</h2>
+                <ul class="d-flex  flex-wrap">
+                    <%for (let route of busroutes[8]) { %>
+                        <li class="vehicles">
+                            <a href="/route/<%=route%>" type="button" class="btn btn-lg m-1">
+                                <%=route%>
+                            </a>
+                            <% if(favorites.includes(route)) {%>
+                                <i class="fas fa-heart heart"></i>
+                                <%} else{%>
+                                    <i class="far fa-heart unHeart"></i>
+                                    <%}%>
+                        </li>
+                        <% } %>
+                </ul>
+            </div>
+            <div>
+                <h2 class="display-4 text-light">700s</h2>
+                <ul class="d-flex  flex-wrap">
+                    <%for (let route of busroutes[9]) { %>
+                        <li class="vehicles">
+                            <a href="/route/<%=route%>" type="button" class="btn btn-lg m-1">
+                                <%=route%>
+                            </a>
+                            <% if(favorites.includes(route)) {%>
+                                <i class="fas fa-heart heart"></i>
+                                <%} else{%>
+                                    <i class="far fa-heart unHeart"></i>
+                                    <%}%>
+                        </li>
+                        <% } %>
+                </ul>
+            </div>
+        </section>
+    </div>
 
     <!-- Custom scripts -->
 

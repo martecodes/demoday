@@ -24,9 +24,22 @@ module.exports = function (app, passport, db) {
       });
   });
 
+  app.get("/profileMap", (req, res) => {
+
+    fetch(`https://api-v3.mbta.com/vehicles`, {
+      headers: {
+        "x-api-key": "6c7e8dcb17e44647ac1b58bdfd77e11a",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        res.send(data)
+      });
+  });
+
 
   app.get("/stopsLocation/:stopsId", (req, res) => {
-    fetch(`https://api-v3.mbta.com/stops/${req.params.stopsId}`, {
+    fetch(`https://api-v3.mbta.com/stops?filter%5Broute%5D=${req.params.stopsId}`, {
       headers: {
         "x-api-key": "6c7e8dcb17e44647ac1b58bdfd77e11a",
       }
@@ -52,7 +65,7 @@ module.exports = function (app, passport, db) {
   });
 
   app.get("/route/:routeid", isLoggedIn, function (req, res) {
-    console.log(req.user.local);
+  
     db.collection("messages")
       .find()
       .toArray((err, result) => {

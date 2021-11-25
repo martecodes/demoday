@@ -20,22 +20,29 @@
         <link rel="stylesheet" href="main.css">
 </head>
 
-<body>
+<body class="homepage">
 
-    <div class="d-flex flex-column align-content-center m-5">
+    <div class="d-flex flex-column align-content-center mt-5">
+        <div class="d-flex justify-content-center mt-5">
 
-        <h1 class="text-center transpo">My Transpo</h1>
-        <div class="d-flex justify-content-center">
-
-            <img src="img/bus.png" alt="bus Inbound icon" class="indexBusIcons"><img src="img/bus-outbound.png" alt="bus Outbound icon" class="indexBusIcons">
-        </div>
-            <div class="vehicles d-flex justify-content-center">
-                <a class="btn m-2" href="/login" role="tab">Login</a>
-            </div>
-
-            <div class="m-3">
-                <p class="text-center">Track your MBTA transportation LIVE!</p>
-                <p class="text-center">Create an <a href="/signup">account</a> for free and track your public transportation</p>
+            <div class="card loginCard p-4">
+                <div class="vehicles d-flex justify-content-center">
+                    <a class="btn m-2" href="/login" role="tab">Login</a>
+                    <a class="btn m-2" href="/signup" role="tab">SignUp</a>
+                </div>
+    
+                <h1 class="text-center transpo">My Transpo</h1>
+                
+                <div class="m-3">
+                    <p class="text-center login-links">Track your MBTA transportation LIVE!</p>
+                    
+                </div>
+                <div class="d-flex">
+        
+                    <img src="img/bus.png" alt="bus Inbound icon" class="indexBusIcons" id="busIconAnimation">
+                    <img src="img/bus-outbound.png" alt="bus Outbound icon" class="indexBusIcons ml-auto" id="busIconAnimationOutbound">
+                </div>
+                </div>
             </div>
         </div>
     </div>

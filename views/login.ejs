@@ -11,21 +11,19 @@
     <link rel="stylesheet" href="main.css">
 </head>
 
-<body>
+<body class="homepage">
+    <div class="d-flex justify-content-center mt-5">
+        <div class="card loginCard m-5">
+            <h1 class="text-center mt-5 login-links">Login</h1>
 
-    <div class="d-flex flex-column align-content-center m-5">
 
-        <h1 class="text-center">Login</h1>
+            <% if (message.length> 0) { %>
+                <div class="alert alert-danger">
+                    <%= message %>
+                </div>
+                <% } %>
 
-        <% if (message.length> 0) { %>
-            <div class="alert alert-danger">
-                <%= message %>
-            </div>
-            <% } %>
-
-                <div class="d-flex justify-content-center">
-
-                    <div class="d-flex flex-column p-3 fav rounded">
+                    <div class="d-flex flex-column px-5">
                         <div>
                             <form action="/login" method="post">
                                 <div class="form-group">
@@ -36,7 +34,7 @@
                                     <label>Password</label>
                                     <input type="password" class="form-control" name="password">
                                 </div>
-                                <div class="vehicles d-flex justify-content-center">
+                                <div class="d-flex justify-content-center">
                                     <button type="submit" class="btn btn-lg">Login</button>
                                 </div>
                             </form>
@@ -48,8 +46,9 @@
 
                         </div>
                     </div>
-                </div>
+        </div>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>

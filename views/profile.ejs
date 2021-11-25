@@ -7,77 +7,238 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>Profile</title>
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+
+    <!-- leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+
     <link rel="stylesheet" href="main.css">
+
+    <style>
+        #map {
+            width: 100%;
+            height: 50vh;
+        }
+    </style>
 </head>
 
-<body>
-    <nav class="navbar  d-flex justify-content-center p-3" role="navigation">
+<body class="profilepage">
+
+    <nav class="navbar d-flex justify-content-center p-3 routesCard" role="navigation">
         <ul class="d-flex flex-row justify-content-around p-0">
-            <li>
+            <li class="d-flex align-items-center">
                 <a href="/profile" class="m-1"><i class="fas fa-home nav-link"></i></a>
             </li>
-        
-            <li>
+
+            <li class="vehicles"><a class="btn m-2" href="/subway">Subway</a></li>
+            <li class="vehicles"><a class="btn m-2" href="/commuterRail">Commuter Rail</a></li>
+            <li class="vehicles"><a class="btn m-2" href="/bus">Bus</a></li>
+            <li class="d-flex align-items-center">
                 <a href="/logout" class="m-1"><i class="fas fa-sign-out-alt nav-link"></i></a>
             </li>
+            </div>
         </ul>
     </nav>
-    
+
     <section>
-        <div class="d-flex justify-content-center">
-            <!-- weather app -->
-            <div class="container card weather mt-3" style="width: 22rem;">
+        <h2 class="text-center">Welcome, <%=user.local.email%>
+        </h2>
+        <div class="d-flex justify-content-around flex-wrap">
+            <div class="col-sm-3">
+                <div class="d-flex justify-content-center">
 
-                <div class="container d-flex justify-content-center">
+                    <div class="container card p-4 mt-3" style="width: 22rem;">
+                        <h2>Today's Forcast</h2>
+                        <div class="container d-flex justify-content-center">
 
-                    <img src="#" alt="weatherIcon" id="weatherIcon" class="card-img-top">
-                    <div class="d-flex flex-column">
+                            <img src="#" alt="weatherIcon" id="weatherIcon" class="card-img-top">
+                            <div class="d-flex flex-column">
 
-                        <br>
-                        <span id="weatherText" class="card-text"></span>
-                        <br>
-                        <span id="weatherTemp" class="card-text"></span>
-                        <br>
-                        <span id="weatherLocation" class="card-text"></span>
+                                <br>
+                                <span id="weatherText" class="card-text login-links"></span>
+                                <br>
+                                <span id="weatherTemp" class="card-text login-links"></span>
+                                <br>
+                                <span id="weatherLocation" class="card-text login-links"></span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card col-sm-4 mt-3">
+                <div id="map"></div>
+
+            </div>
+
+            <div class="d-flex justify-content-center col-sm-4 mt-3">
+                <div class="card p-3 d-flex flex-column">
+                    <h1 class="text-center login-links p-3">My Favorite Transpo</h1>
+                    <div class="d-flex justify-content-center p-3">
+
+                        <ul class="d-flex flex-wrap">
+                            <%for (let route of favorites) { %>
+                                <li class="vehicles">
+                                    <a href="/route/<%=route%>" type="button" class="btn m-2">
+                                        <%=route%>
+                                    </a>
+                                    <% if(favorites.includes(route)) {%>
+                                        <i class="fas fa-heart heart"></i>
+                                        <%} else{%>
+                                            <i class="far fa-heart unHeart"></i>
+                                            <%}%>
+                                </li>
+                                <% } %>
+                        </ul>
                     </div>
 
                 </div>
             </div>
         </div>
-
-        <div class="d-flex justify-content-center mt-2 vehicles">
-            <a class="btn btn-outline-light btn-lg m-1" href="/subway">Subway</a>
-            <a class="btn btn-outline-light btn-lg m-1" href="/commuterRail">Commuter Rail</a>
-            <a class="btn btn-outline-light btn-lg m-1" href="/bus">Bus</a>
-        </div>
-        <div class="d-flex justify-content-center">
-            <div class=" d-flex flex-column">
-                <h1 class="display-4 text-center">Favorite Routes</h1>
-                <div class="d-flex justify-content-center p-3 card fav">
-
-                    <ul class="fav-ul d-flex justify-content-around flex-column fav-box">
-                        <%for (let route of favorites) { %>
-                            <li class="fav-list">
-                                <a href="/route/<%=route%>" type="button" class="btn btn-outline-light btn-lg m-1">
-                                    <%=route%>
-                                </a>
-                                <% if(favorites.includes(route)) {%>
-                                    <i class="fas fa-heart heart"></i>
-                                    <%} else{%>
-                                        <i class="far fa-heart unHeart"></i>
-                                        <%}%>
-                            </li>
-                            <% } %>
-                    </ul>
-                </div>
-
-            </div>
-        </div>
     </section>
 
+    <script>
+
+        const map = L.map('map').setView([<%=user.local.coords.lat %>, <%=user.local.coords.lng %>], 10);
+
+        const tiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1IjoibWFydGVjb2RlcyIsImEiOiJja3ZwZG0zeDRlZ3lsMnptbjhiZ3NrbTFtIn0.vXc_RJA_QcE0YbvvDc28tA'
+        }).addTo(map);
+
+        const userIcon = L.icon({
+            iconUrl: '/img/user.png',
+            iconSize: [40, 40],
+            iconAnchor: [20, 20],
+        });
+
+        const userMarker = L.marker([<%=user.local.coords.lat %>, <%=user.local.coords.lng %>], { icon: userIcon }).addTo(map)
+
+        const userPing = [<%=user.local.coords.lat %>, <%=user.local.coords.lng %>]
+
+         const busInbound = L.icon({
+                iconUrl: '/img/bus.png',
+                iconSize: [40, 40],
+                iconAnchor: [20, 20],
+            });
+
+            const busOutbound = L.icon({
+                iconUrl: '/img/bus-outbound.png',
+                iconSize: [40, 40],
+                iconAnchor: [20, 20],
+            });
+
+        let vehicles = []
+
+        let vehiclesPing = []
+
+        function showVehicles() {
+            let distanceMessage = document.getElementById('distanceMessage')
+
+            fetch(`/profileMap`)
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data.data);
+                    for (let i = 0; i < vehicles.length; i++) {
+                        map.removeLayer(vehicles[i])
+                    }
+
+                    vehicles = []
+
+                    vehiclesPing = []
+
+
+                    for (let i = 0; i < data.data.length; i++) {
+                        if (data.data[i].attributes.direction_id !== 0) {
+                            vehicles.push(L.marker([data.data[i].attributes.latitude, data.data[i].attributes.longitude], { icon: busInbound }))
+                            vehiclesPing.push(data.data[i].attributes.latitude, data.data[i].attributes.longitude)
+                        } else {
+                            vehicles.push(L.marker([data.data[i].attributes.latitude, data.data[i].attributes.longitude], { icon: busOutbound }))
+                            vehiclesPing.push(data.data[i].attributes.latitude, data.data[i].attributes.longitude)
+                        }
+                    }
+
+                    let latCounter = 0
+                    let lngCounter = 1
+
+
+                    for (let i = 0; i < data.data.length; i++) {
+                        let stopId;
+                        let vehicleId = data.data[i].relationships.route.data.id
+                        let routeNamePopup = data.data[i].relationships.route.data.id
+                      
+
+                        if (data.data[i].relationships.stop.data === null) {
+                            data.data[0].relationships.stop.data !== null ? stopId = data.data[0].relationships.stop.data.id : stopId = data.data[1].relationships.stop.data.id
+                        } else {
+                            stopId = data.data[i].relationships.stop.data.id
+                        }
+
+                        let transpoDistance = distance(userPing[0], userPing[1], vehiclesPing[latCounter], vehiclesPing[lngCounter], "M")
+                        
+                        fetch(`/stopsLocation/${stopId}`)
+                            .then(res => res.json())
+                            .then(data => {
+                                console.log(data);
+                                vehicles[i].bindPopup(`<p>Transpo is on ${data.data.attributes.name}</p> <p>Your Transpo is ${transpoDistance} miles away</p> 
+                                <p>Transpo Route: ${routeNamePopup}</p>
+                                <a href= "/route/${vehicleId}">Show This Route Only</a>`)
+                            })
+                            .catch(err => {
+                                console.log(`error ${err}`)
+                            });
+                        latCounter += 2
+                        lngCounter += 2
+                    }
+
+                    let featureGroup = L.featureGroup(vehicles).addTo(map)
+
+                })
+        }
+        window.onload = showVehicles()
+
+        setInterval(() => {
+            showVehicles()
+        }, 30000);
+
+
+        function distance(lat1, lon1, lat2, lon2, unit) {
+            if ((lat1 == lat2) && (lon1 == lon2)) {
+                return 0;
+            }
+
+            else {
+                const radlat1 = Math.PI * lat1 / 180;
+                const radlat2 = Math.PI * lat2 / 180;
+                const theta = lon1 - lon2;
+                const radtheta = Math.PI * theta / 180;
+                let dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+                if (dist > 1) {
+                    dist = 1;
+                }
+                dist = Math.acos(dist);
+                dist = dist * 180 / Math.PI;
+                dist = dist * 60 * 1.1515;
+                if (unit == "K") { dist = dist * 1.609344 }
+                if (unit == "N") { dist = dist * 0.8684 }
+                return Math.round(dist * 10) / 10
+            }
+        }
+
+    </script>
 
     <script src="main.js"></script>
     <script src="weather.js"></script>

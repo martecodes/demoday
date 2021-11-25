@@ -13,13 +13,7 @@
     <!-- Google Fonts Roboto -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
-    <!-- leaflet -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-        crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-        crossorigin=""></script>
+ 
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -38,41 +32,41 @@
     </style>
 </head>
 
-<body>
-    <nav class="navbar  d-flex justify-content-center p-3" role="navigation">
-        <ul class="d-flex flex-row justify-content-around p-0">
-            <li>
-                <a href="/profile"><i class="fas fa-home nav-link"></i></a>
-            </li>
-            <li>
-                <a href="/logout"><i class="fas fa-sign-out-alt nav-link"></i></a>
-            </li>
-        </ul>
-    </nav>
-    <section class="m-3">
-        <div class="d-flex justify-content-center mt-2 vehicles">
-            <a class="btn btn-outline-light btn-lg m-1" href="/subway">Subway</a>
-            <a class="btn btn-outline-light btn-lg m-1" href="/commuterRail">Commuter Rail</a>
-            <a class="btn btn-outline-light btn-lg m-1" href="/bus">Bus</a>
-        </div>
-        <div class=" d-flex justify-content-center m-3">
-            <ul class=" d-flex flex-wrap">
-                <%for (let route of railroutes) { %>
-                    <li class="fav-list">
-                        <a href="/route/<%=route%>" type="button" class="btn btn-outline-light btn-lg m-1">
-                            <%=route%>
-                        </a>
-                        <% if(favorites.includes(route)) {%>
-                            <i class="fas fa-heart heart"></i>
-                            <%} else{%>
-                                <i class="far fa-heart unHeart"></i>
-                                <%}%>
-                    </li>
-                    <% } %>
-            </ul>
+<body class="routepage">
+    <header class="routesCard">
 
-        </div>
-    </section>
+        <nav class="navbar  d-flex justify-content-center p-3" role="navigation">
+            <ul class="d-flex flex-row justify-content-around p-0">
+                <li>
+                    <a href="/profile"><i class="fas fa-home nav-link"></i></a>
+                </li>
+                <li class="vehicles"><a class="btn  m-2" href="/subway">Subway</a></li>
+                
+                <li class="vehicles"><a class="btn m-2" href="/bus">Bus</a></li>
+                <li>
+                    <a href="/logout"><i class="fas fa-sign-out-alt nav-link"></i></a>
+                </li>
+            </ul>
+        </nav>
+
+            <div class=" d-flex justify-content-center m-3">
+                <ul class=" d-flex flex-wrap">
+                    <%for (let route of railroutes) { %>
+                        <li class="vehicles">
+                            <a href="/route/<%=route%>" type="button" class="btn btn-lg m-1">
+                                <%=route%>
+                            </a>
+                            <% if(favorites.includes(route)) {%>
+                                <i class="fas fa-heart heart"></i>
+                                <%} else{%>
+                                    <i class="far fa-heart unHeart"></i>
+                                    <%}%>
+                        </li>
+                        <% } %>
+                </ul>
+    
+            </div>
+    </header>
 
     <!-- Custom scripts -->
 

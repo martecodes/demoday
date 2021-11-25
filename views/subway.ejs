@@ -7,41 +7,42 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>Subway</title>
 
-
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" />
-   
+
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="/main.css">
-    
+    <link rel="stylesheet" href="main.css">
+
 </head>
 
-<body>
-    <nav class="navbar  d-flex justify-content-center p-3" role="navigation">
-        <ul class="d-flex flex-row justify-content-around p-0">
-            <li>
-                <a href="/profile"><i class="fas fa-home nav-link"></i></a>
-            </li>
-            
-            <li>
-                <a href="/logout"><i class="fas fa-sign-out-alt nav-link"></i></a>
-            </li>
-        </ul>
-    </nav>
-    <section class="m-3">
-        <div class="d-flex justify-content-center mt-2 vehicles">
-            <a class="btn btn-outline-light btn-lg m-1" href="/subway">Subway</a>
-            <a class="btn btn-outline-light btn-lg m-1" href="/commuterRail">Commuter Rail</a>
-            <a class="btn btn-outline-light btn-lg m-1" href="/bus">Bus</a>
-        </div>
+<body class="routepage">
+    <header class="routesCard">
+
+        <nav class="navbar d-flex justify-content-center p-3" role="navigation">
+            <ul class="d-flex flex-row justify-content-around p-0">
+                <li>
+                    <a href="/profile"><i class="fas fa-home nav-link"></i></a>
+                </li>
+    
+               
+                <li class="vehicles d-flex align-items-center"><a class="btn m-2" href="/commuterRail">Commuter
+                        Rail</a></li>
+                <li class="vehicles d-flex align-items-center"><a class="btn m-2" href="/bus">Bus</a></li>
+                <li>
+                    <a href="/logout"><i class="fas fa-sign-out-alt nav-link"></i></a>
+                </li>
+                </div>
+            </ul>
+        </nav>
+    
         <div class=" d-flex justify-content-center mt-3">
             <ul class=" d-flex flex-wrap">
                 <%for (let route of subwayroutes) { %>
-                    <li class="fav-list">
-                        <a href="/route/<%=route%>" type="button" class="btn btn-outline-light btn-lg m-1">
+                    <li class="vehicles">
+                        <a href="/route/<%=route%>" type="button" class="btn btn-outline-light m-1">
                             <%=route%>
                         </a>
                         <% if(favorites.includes(route)) {%>
@@ -52,9 +53,11 @@
                     </li>
                     <% } %>
             </ul>
-
+    
         </div>
-    </section>
+
+    </header>
+
 
     <!-- Custom scripts -->
 

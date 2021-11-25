@@ -71,9 +71,7 @@ module.exports = function (passport, db) {
             db.collection("favorites").insertOne({
               email,
               routesName: []
-              //  subways.map((route) => {
-                // return { name: route, isFavorite: false };
-              // }),
+              
             });
           }
         });
