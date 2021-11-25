@@ -102,27 +102,27 @@
             [<%=user.local.coords.lat %>, <%=user.local.coords.lng %>],
             { icon: userIcon }).addTo(map)
 
-            
-            const userPing = [<%=user.local.coords.lat %>, <%=user.local.coords.lng %>]
-            
-            const busInbound = L.icon({
-                iconUrl: '/img/bus.png',
-                iconSize: [40, 40],
-                iconAnchor: [20, 20],
-            });
-            
-            const busOutbound = L.icon({
+
+        const userPing = [<%=user.local.coords.lat %>, <%=user.local.coords.lng %>]
+
+        const busInbound = L.icon({
+            iconUrl: '/img/bus.png',
+            iconSize: [40, 40],
+            iconAnchor: [20, 20],
+        });
+
+        const busOutbound = L.icon({
             iconUrl: '/img/bus-outbound.png',
             iconSize: [40, 40],
             iconAnchor: [20, 20],
         });
-        
+
         const stopsIcon = L.icon({
             iconUrl: '/img/stops.png',
             iconSize: [40, 40],
             iconAnchor: [20, 20],
         })
- 
+
 
         const tiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -139,19 +139,22 @@
 
         function showVehicles(routeid) {
             let distanceMessage = document.getElementById('distanceMessage')
-
+            let vehiclesData;
             fetch(`/vehicles/${routeid}`)
                 .then(res => res.json())
                 .then(data => {
-
                     for (let i = 0; i < vehicles.length; i++) {
                         map.removeLayer(vehicles[i])
                     }
 
+                    for (let i = 0; i < stops.length; i++) {
+                        map.removeLayer(stops[i])
+                    }
+
                     vehicles = []
                     vehiclesPing = []
-                    
-                    
+
+
                     for (let i = 0; i < data.data.length; i++) {
                         routeNameDisplay.innerText = `Transpo Route: ${data.data[i].relationships.route.data.id}`
                         if (data.data[i].attributes.direction_id !== 0) {
@@ -162,11 +165,11 @@
                             vehiclesPing.push(data.data[i].attributes.latitude, data.data[i].attributes.longitude)
                         }
                     }
-                    
+
                     let latCounter = 0
                     let lngCounter = 1
-                    
-                    
+
+
                     for (let i = 0; i < 1; i++) {
                         let stopId;
                         stops = []
@@ -177,28 +180,32 @@
                         fetch(`/stopsLocation/${stopId}`)
                             .then(res => res.json())
                             .then(stopsData => {
-                                for(let i = 0;i < stopsData.data.length;i++){
+                                
+                                for (let i = 0; i < stopsData.data.length; i++) {
                                     stops.push(L.marker([stopsData.data[i].attributes.latitude, stopsData.data[i].attributes.longitude], { icon: stopsIcon }))
+                                    stops[i].bindPopup(`${stopsData.data[i].attributes.address}`)
                                 }
+                                L.featureGroup(vehicles).addTo(map)
+                                L.featureGroup(stops).addTo(map)
                             })
                             .catch(err => {
                                 console.log(`error ${err}`)
                             });
+                        
                         latCounter += 2
                         lngCounter += 2
                     }
-                    
-                  
-                    let featureGroup = L.featureGroup([vehicles, stops]).addTo(map)
-
                 })
         }
 
+        (function showMe(){
+           showVehicles('<%= routeid %>')
+        })()
 
 
         setInterval(() => {
             showVehicles('<%= routeid %>')
-        }, 3000);
+        }, 4000);
 
 
         function distance(lat1, lon1, lat2, lon2, unit) {
