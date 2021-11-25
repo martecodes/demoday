@@ -151,7 +151,6 @@
             fetch(`/profileMap`)
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data.data);
                     for (let i = 0; i < vehicles.length; i++) {
                         map.removeLayer(vehicles[i])
                     }
@@ -160,8 +159,16 @@
 
                     vehiclesPing = []
 
+                    let latCounter = 0
+                    let lngCounter = 1
 
                     for (let i = 0; i < data.data.length; i++) {
+                        let stopId;
+                        let vehicleId = data.data[i].relationships.route.data.id
+                        let routeNamePopup = data.data[i].relationships.route.data.id
+                        stopId = data.data[i].relationships.route.data.id
+                        let transpoDistance = distance(userPing[0], userPing[1], vehiclesPing[latCounter], vehiclesPing[lngCounter], "M")
+                        
                         if (data.data[i].attributes.direction_id !== 0) {
                             vehicles.push(L.marker([data.data[i].attributes.latitude, data.data[i].attributes.longitude], { icon: busInbound }))
                             vehiclesPing.push(data.data[i].attributes.latitude, data.data[i].attributes.longitude)
@@ -169,37 +176,10 @@
                             vehicles.push(L.marker([data.data[i].attributes.latitude, data.data[i].attributes.longitude], { icon: busOutbound }))
                             vehiclesPing.push(data.data[i].attributes.latitude, data.data[i].attributes.longitude)
                         }
-                    }
-
-                    let latCounter = 0
-                    let lngCounter = 1
-
-
-                    for (let i = 0; i < data.data.length; i++) {
-                        let stopId;
-                        let vehicleId = data.data[i].relationships.route.data.id
-                        let routeNamePopup = data.data[i].relationships.route.data.id
-                      
-
-                        if (data.data[i].relationships.stop.data === null) {
-                            data.data[0].relationships.stop.data !== null ? stopId = data.data[0].relationships.stop.data.id : stopId = data.data[1].relationships.stop.data.id
-                        } else {
-                            stopId = data.data[i].relationships.stop.data.id
-                        }
-
-                        let transpoDistance = distance(userPing[0], userPing[1], vehiclesPing[latCounter], vehiclesPing[lngCounter], "M")
                         
-                        fetch(`/stopsLocation/${stopId}`)
-                            .then(res => res.json())
-                            .then(data => {
-                                console.log(data);
-                                vehicles[i].bindPopup(`<p>Transpo is on ${data.data.attributes.name}</p> <p>Your Transpo is ${transpoDistance} miles away</p> 
-                                <p>Transpo Route: ${routeNamePopup}</p>
-                                <a href= "/route/${vehicleId}">Show This Route Only</a>`)
-                            })
-                            .catch(err => {
-                                console.log(`error ${err}`)
-                            });
+                        vehicles[i].bindPopup(`<p>Your Transpo is ${transpoDistance} miles away</p> 
+                        <p>Transpo Route: ${routeNamePopup}</p>
+                        <a href= "/route/${vehicleId}">Show This Route Only</a>`)
                         latCounter += 2
                         lngCounter += 2
                     }
@@ -208,6 +188,7 @@
 
                 })
         }
+
         window.onload = showVehicles()
 
         setInterval(() => {

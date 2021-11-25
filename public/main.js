@@ -1,12 +1,9 @@
 const heart = document.getElementsByClassName("heart");
 const unHeart = document.getElementsByClassName("unHeart");
-console.log(heart);
-console.log(unHeart);
 
 Array.from(unHeart).forEach(function (element) {
     element.addEventListener('click', function () {
         const routeName = this.parentNode.childNodes[1].innerText
-        console.log(routeName);
 
         fetch('/routeLikes', {
             method: 'put',
@@ -28,7 +25,6 @@ Array.from(unHeart).forEach(function (element) {
 Array.from(heart).forEach(function (element) {
     element.addEventListener('click', function () {
         const routeName = this.parentNode.childNodes[1].innerText
-        console.log(routeName);
 
         fetch('/routeUnLikes', {
             method: 'put',

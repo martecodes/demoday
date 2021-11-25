@@ -10,7 +10,6 @@ function weatherApi(){
             fetch(`http://api.weatherapi.com/v1/current.json?key=19645e2074124ba1b17144809211810&q=${latlng.local.coords.lat},${latlng.local.coords.lng}&aqi=no`)
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 let icon = document.getElementById("weatherIcon")
                 let text = document.getElementById("weatherText")
                 let location = document.getElementById("weatherLocation")

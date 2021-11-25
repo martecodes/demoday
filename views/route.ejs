@@ -174,16 +174,20 @@
                         let stopId;
                         stops = []
                         stopId = data.data[i].relationships.route.data.id
-
                         let transpoDistance = distance(userPing[0], userPing[1], vehiclesPing[latCounter], vehiclesPing[lngCounter], "M")
 
                         fetch(`/stopsLocation/${stopId}`)
                             .then(res => res.json())
                             .then(stopsData => {
-                                
+                                console.log(stopsData.data)
                                 for (let i = 0; i < stopsData.data.length; i++) {
                                     stops.push(L.marker([stopsData.data[i].attributes.latitude, stopsData.data[i].attributes.longitude], { icon: stopsIcon }))
-                                    stops[i].bindPopup(`${stopsData.data[i].attributes.address}`)
+                                    if(stopsData.data[i].attributes.address === null){
+                                        stops[i].bindPopup(stopsData.data[i].attributes.name)
+                                    }else{
+                                        stops[i].bindPopup(stopsData.data[i].attributes.address)
+                                    }
+                                    
                                 }
                                 L.featureGroup(vehicles).addTo(map)
                                 L.featureGroup(stops).addTo(map)
@@ -191,15 +195,15 @@
                             .catch(err => {
                                 console.log(`error ${err}`)
                             });
-                        
+
                         latCounter += 2
                         lngCounter += 2
                     }
                 })
         }
 
-        (function showMe(){
-           showVehicles('<%= routeid %>')
+        (function showMe() {
+            showVehicles('<%= routeid %>')
         })()
 
 
