@@ -40,9 +40,9 @@
     </style>
 </head>
 
-<body class="routepage">
+<body class="bg-dark">
     <!-- Start your project here-->
-    <nav class="navbar routesCard d-flex justify-content-center p-3" role="navigation">
+    <nav class="navbar routesCard d-flex justify-content-center p-0" role="navigation">
         <ul class="d-flex flex-row justify-content-around p-0">
             <li>
                 <a href="/profile" class="m-1"><i class="fas fa-home nav-link"></i></a>
@@ -59,13 +59,13 @@
         </ul>
     </nav>
 
-    <div class=" d-flex justify-content-center">
-        <div class="col-sm-3 card p-3">
+    <div class=" d-flex justify-content-center mt-3">
+        <div class="col-med-3 card p-3">
             <div class="d-flex justify-content-center align-items-center">
-                <img src="/img/bus.png" alt="busInbound" class="busIcons" id="inbound">
+                <img src="/img/bus.png" alt="busInbound" class="busIcons" id="inboundOnly">
                 <span class="mr-2">Inbound</span>
 
-                <img src="/img/bus-outbound.png" alt="busoutbound" class="busIcons" id="outbound">
+                <img src="/img/bus-outbound.png" alt="busoutbound" class="busIcons" id="outboundOnly">
                 <span>Outbound</span>
             </div>
 
@@ -88,6 +88,10 @@
     <!-- Custom scripts -->
 
     <script>
+        document.getElementById('inboundOnly').addEventListener('click', inboundOnly)
+        document.getElementById('outboundOnly').addEventListener('click', outboundOnly)
+
+
         const routeNameDisplay = document.getElementById('routeNameDisplay')
 
         const map = L.map('map').setView([<%=user.local.coords.lat %>, <%=user.local.coords.lng %>], 14);
@@ -123,6 +127,18 @@
             iconAnchor: [20, 20],
         })
 
+        const stopsInbound = L.icon({
+            iconUrl: '/img/stopsInbound.png',
+            iconSize: [30, 30],
+            iconAnchor: [15, 15],
+        })
+
+        const stopsOutbound = L.icon({
+            iconUrl: '/img/stopsOutbound.png',
+            iconSize: [30, 30],
+            iconAnchor: [15, 15],
+        })
+
 
         const tiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -137,18 +153,21 @@
         let stops = []
         let vehiclesPing = []
 
+
+
         function showVehicles(routeid) {
             let distanceMessage = document.getElementById('distanceMessage')
             let vehiclesData;
+
+            let dataObj;
             fetch(`/vehicles/${routeid}`)
                 .then(res => res.json())
                 .then(data => {
+                    let latCounter = 0
+                    let lngCounter = 1
+
                     for (let i = 0; i < vehicles.length; i++) {
                         map.removeLayer(vehicles[i])
-                    }
-
-                    for (let i = 0; i < stops.length; i++) {
-                        map.removeLayer(stops[i])
                     }
 
                     vehicles = []
@@ -156,7 +175,9 @@
 
 
                     for (let i = 0; i < data.data.length; i++) {
+
                         routeNameDisplay.innerText = `Transpo Route: ${data.data[i].relationships.route.data.id}`
+
                         if (data.data[i].attributes.direction_id !== 0) {
                             vehicles.push(L.marker([data.data[i].attributes.latitude, data.data[i].attributes.longitude], { icon: busInbound }))
                             vehiclesPing.push(data.data[i].attributes.latitude, data.data[i].attributes.longitude)
@@ -164,46 +185,79 @@
                             vehicles.push(L.marker([data.data[i].attributes.latitude, data.data[i].attributes.longitude], { icon: busOutbound }))
                             vehiclesPing.push(data.data[i].attributes.latitude, data.data[i].attributes.longitude)
                         }
+
                     }
 
-                    let latCounter = 0
-                    let lngCounter = 1
+                    let transpoDistance = distance(userPing[0], userPing[1], vehiclesPing[latCounter], vehiclesPing[lngCounter], "M")
 
 
-                    for (let i = 0; i < 1; i++) {
-                        let stopId;
-                        stops = []
-                        stopId = data.data[i].relationships.route.data.id
-                        let transpoDistance = distance(userPing[0], userPing[1], vehiclesPing[latCounter], vehiclesPing[lngCounter], "M")
+                    L.featureGroup(vehicles).addTo(map)
 
-                        fetch(`/stopsLocation/${stopId}`)
-                            .then(res => res.json())
-                            .then(stopsData => {
-                                console.log(stopsData.data)
-                                for (let i = 0; i < stopsData.data.length; i++) {
-                                    stops.push(L.marker([stopsData.data[i].attributes.latitude, stopsData.data[i].attributes.longitude], { icon: stopsIcon }))
-                                    if(stopsData.data[i].attributes.address === null){
-                                        stops[i].bindPopup(stopsData.data[i].attributes.name)
-                                    }else{
-                                        stops[i].bindPopup(stopsData.data[i].attributes.address)
-                                    }
-                                    
-                                }
-                                L.featureGroup(vehicles).addTo(map)
-                                L.featureGroup(stops).addTo(map)
-                            })
-                            .catch(err => {
-                                console.log(`error ${err}`)
-                            });
-
+                    for (let i = 0; i < vehicles.length; i++) {
+                        vehicles[i].bindPopup(`${transpoDistance} Miles away.`)
                         latCounter += 2
                         lngCounter += 2
                     }
                 })
         }
+        function inboundOnly() {
+            for (let i = 0; i < vehicles.length; i++) {
+                if (vehicles[i].options.icon.options.iconUrl !== "/img/bus.png") {
+                    map.removeLayer(vehicles[i])
+                }
+            }
+        }
+
+        function outboundOnly() {
+            for (let i = 0; i < vehicles.length; i++) {
+                if (vehicles[i].options.icon.options.iconUrl !== "/img/bus-outbound.png") {
+                    map.removeLayer(vehicles[i])
+                }
+            }
+        }
+
 
         (function showMe() {
             showVehicles('<%= routeid %>')
+
+            fetch(`/vehicles/<%= routeid %>`)
+                .then(res => res.json())
+                .then(data => {
+                    // let stopsIcons;
+                    for (let i = 0; i < 1; i++) {
+                        let stopId;
+                        stopId = data.data[i].relationships.route.data.id
+
+                        fetch(`/stopsLocation/${stopId}`)
+                            .then(res => res.json())
+                            .then(stopsData => {
+                                // if (data.data[i] !== undefined) {
+                                //     if (data.data[i].attributes.direction_id !== 0) {
+                                //         stopsIcons = { icon: stopsInbound }
+                                //     } else {
+                                //         stopsIcons = { icon: stopsOutbound }
+                                //     }
+                                // }
+                                for (let i = 0; i < stopsData.data.length; i++) {
+                                    console.log(stopsData.data);
+                                    stops.push(L.marker([stopsData.data[i].attributes.latitude, stopsData.data[i].attributes.longitude], { icon: stopsInbound }))
+
+                                    if (stopsData.data[i].attributes.address === null) {
+                                        stops[i].bindPopup(stopsData.data[i].attributes.name)
+                                    } else {
+                                        stops[i].bindPopup(stopsData.data[i].attributes.address)
+                                    }
+                                }
+
+                                L.featureGroup(stops).addTo(map)
+
+
+                            })
+                            .catch(err => {
+                                console.log(`error ${err}`)
+                            });
+                    }
+                })
         })()
 
 

@@ -6,7 +6,6 @@ function weatherApi(){
     fetch('/latlng')
         .then(res => res.json())
         .then(latlng => {
-            console.log(latlng);
             fetch(`http://api.weatherapi.com/v1/current.json?key=19645e2074124ba1b17144809211810&q=${latlng.local.coords.lat},${latlng.local.coords.lng}&aqi=no`)
             .then(res => res.json())
             .then(data => {
