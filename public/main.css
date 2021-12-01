@@ -6,13 +6,13 @@
 .homepage{
     background-image: url('./img/homepage.jpg');
     background-size: fit;
-    background-repeat: no-repeat;
+    background-repeat:repeat;
 }
 
 .profilepage{
     background-image: url('./img/profilepage.jpg');
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat:repeat;
 }
 
 .routepage{
