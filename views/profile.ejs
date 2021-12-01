@@ -150,7 +150,7 @@
         let vehiclesPing = []
 
         function showVehicles() {
-            let testing = document.getElementById('test').innerText.split(",")
+            let testing = document.getElementById('test').innerText.trim().split(",")
 
             fetch(`/profileMap`)
                 .then(res => res.json())

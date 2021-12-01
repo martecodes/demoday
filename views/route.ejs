@@ -153,7 +153,7 @@
         let stops = []
         let vehiclesPing = []
 
-
+        let inboundOutboundCounter = 1
 
         function showVehicles(routeid) {
             let distanceMessage = document.getElementById('distanceMessage')
@@ -163,6 +163,7 @@
             fetch(`/vehicles/${routeid}`)
                 .then(res => res.json())
                 .then(data => {
+
                     let latCounter = 0
                     let lngCounter = 1
 
@@ -185,7 +186,6 @@
                             vehicles.push(L.marker([data.data[i].attributes.latitude, data.data[i].attributes.longitude], { icon: busOutbound }))
                             vehiclesPing.push(data.data[i].attributes.latitude, data.data[i].attributes.longitude)
                         }
-
                     }
 
                     let transpoDistance = distance(userPing[0], userPing[1], vehiclesPing[latCounter], vehiclesPing[lngCounter], "M")
@@ -200,22 +200,6 @@
                     }
                 })
         }
-        function inboundOnly() {
-            for (let i = 0; i < vehicles.length; i++) {
-                if (vehicles[i].options.icon.options.iconUrl !== "/img/bus.png") {
-                    map.removeLayer(vehicles[i])
-                }
-            }
-        }
-
-        function outboundOnly() {
-            for (let i = 0; i < vehicles.length; i++) {
-                if (vehicles[i].options.icon.options.iconUrl !== "/img/bus-outbound.png") {
-                    map.removeLayer(vehicles[i])
-                }
-            }
-        }
-
 
         (function showMe() {
             showVehicles('<%= routeid %>')
@@ -223,6 +207,7 @@
             fetch(`/vehicles/<%= routeid %>`)
                 .then(res => res.json())
                 .then(data => {
+                    console.log(data.data);
                     // let stopsIcons;
                     for (let i = 0; i < 1; i++) {
                         let stopId;
@@ -231,15 +216,7 @@
                         fetch(`/stopsLocation/${stopId}`)
                             .then(res => res.json())
                             .then(stopsData => {
-                                // if (data.data[i] !== undefined) {
-                                //     if (data.data[i].attributes.direction_id !== 0) {
-                                //         stopsIcons = { icon: stopsInbound }
-                                //     } else {
-                                //         stopsIcons = { icon: stopsOutbound }
-                                //     }
-                                // }
                                 for (let i = 0; i < stopsData.data.length; i++) {
-                                    console.log(stopsData.data);
                                     stops.push(L.marker([stopsData.data[i].attributes.latitude, stopsData.data[i].attributes.longitude], { icon: stopsInbound }))
 
                                     if (stopsData.data[i].attributes.address === null) {
