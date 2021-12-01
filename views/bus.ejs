@@ -34,21 +34,24 @@
 </head>
 
 <body class="routepage">
-    <div class="routesCard">
+    <header class="routesCard">
 
-        <nav class="navbar  d-flex justify-content-center p-3" role="navigation">
-            <ul class="d-flex flex-row justify-content-around p-0">
-                <li>
-                    <a href="/profile"><i class="fas fa-home nav-link"></i></a>
+        <nav class="navbar d-flex justify-content-center" role="navigation">
+            <ul class="d-flex justify-content-around p-0 col-md-4">
+                <li class="d-flex align-items-center">
+                    <a href="/profile" class=""><i class="fas fa-home nav-link"></i></a>
                 </li>
-                <li class="vehicles"><a class="btn m-2" href="/subway">Subway</a></li>
-                <li class="vehicles"><a class="btn m-2" href="/commuterRail">Commuter Rail</a></li>
-                
-                <li>
-                    <a href="/logout"><i class="fas fa-sign-out-alt nav-link"></i></a>
+        
+                <li class="vehicles"><a class="btn mt-2" href="/subway">Subway</a></li>
+                <li class="vehicles"><a class="btn mt-2" href="/commuterRail">Commuter Rail</a></li>
+                <li class="vehicles"><a class="btn mt-2" href="/bus">Bus</a></li>
+                <li class="d-flex align-items-center">
+                    <a href="/logout" class=""><i class="fas fa-sign-out-alt nav-link"></i></a>
                 </li>
+                </div>
             </ul>
         </nav>
+
 
         <section class="mt-5">
             <div>
@@ -223,7 +226,7 @@
                 </ul>
             </div>
         </section>
-    </div>
+    </header>
 
     <!-- Custom scripts -->
 
