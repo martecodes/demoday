@@ -207,8 +207,6 @@
             fetch(`/vehicles/<%= routeid %>`)
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data.data);
-                    // let stopsIcons;
                     for (let i = 0; i < 1; i++) {
                         let stopId;
                         stopId = data.data[i].relationships.route.data.id
