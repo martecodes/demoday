@@ -15,28 +15,15 @@
     background-repeat:repeat;
 }
 
-.routepage{
-    background-image: url('./img/routepage.jpg');
-    background-size: cover;
-    height: 100vh;
-    background-repeat: repeat;
-}
 
 .routesCard{
     background: rgba(255, 255, 255, 0.445);
-}
-nav i{
-    font-size: 30px;
-    color: black;   
 }
 
 h2{
     color: black;
 }
 
-nav a:hover{
-    text-decoration: none;
-}
 
 i:hover{
    transform: scale(1.5);
@@ -78,9 +65,8 @@ ul{
     color: rgb(0, 0, 0);
 }
 
-h1{
+.welcome-text{
     font-family: 'Barlow Semi Condensed', sans-serif;
-    font-size: 8s0px !important;
 }
 
 .heart{

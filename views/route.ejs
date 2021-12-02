@@ -5,9 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>My Transpo</title>
-
-
+    <title><%= routeid %></title>
+    <link rel="icon" type="image/png" href="/img/bus.png"/>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" />
     <!-- Google Fonts Roboto -->
@@ -26,6 +25,7 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link rel="stylesheet" href="/main.css">
+    <link rel="stylesheet" href="/header.css">
 
     <style>
         body {
@@ -42,21 +42,18 @@
 
 <body class="bg-dark">
     <!-- Start your project here-->
-    <nav class="navbar d-flex justify-content-center" role="navigation">
-            <ul class="d-flex justify-content-around p-0 col-md-4">
-                <li class="d-flex align-items-center">
-                    <a href="/profile" class=""><i class="fas fa-home nav-link"></i></a>
-                </li>
-        
-                <li class="vehicles"><a class="btn mt-2" href="/subway">Subway</a></li>
-                <li class="vehicles"><a class="btn mt-2" href="/commuterRail">Commuter Rail</a></li>
-                <li class="vehicles"><a class="btn mt-2" href="/bus">Bus</a></li>
-                <li class="d-flex align-items-center">
-                    <a href="/logout" class=""><i class="fas fa-sign-out-alt nav-link"></i></a>
-                </li>
-                </div>
-            </ul>
+    <header class="route-header">
+        <div class="clear"></div>
+        <nav class="d-flex justify-content-center">
+            <ul>
+                <li><a href="/profile">Home</a></li>
+                <li><a href="/subway">Subway</a></li>
+                <li><a href="/commuterRail">Commuter Rail</a></li>
+                <li><a href="/bus">Bus</a></li>
+                <li><a href="/logout">Logout</a></li>
+                <ul>
         </nav>
+    </header>
 
     <div class=" d-flex justify-content-center mt-3">
         <div class="col-med-3 card p-3">
@@ -78,7 +75,7 @@
     </div>
 
     <div class="d-flex justify-content-center mt-3">
-        <div id="map" class="w-75 mb-3"></div>
+        <div id="map" class="col-md-6"></div>
     </div>
 
 
@@ -262,6 +259,24 @@
                 return Math.round(dist * 10) / 10
             }
         }
+    </script>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js">
+        /* ========================================== 
+    scrollTop() >= 300
+    Should be equal the the height of the header
+    ========================================== */
+
+        $(window).scroll(function () {
+            if ($(window).scrollTop() >= 300) {
+                $('nav').addClass('fixed-header');
+                $('nav div').addClass('visible-title');
+            }
+            else {
+                $('nav').removeClass('fixed-header');
+                $('nav div').removeClass('visible-title');
+            }
+        });
+
     </script>
     <!-- bootstrap -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

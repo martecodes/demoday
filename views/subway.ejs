@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>Subway</title>
-
+    <link rel="icon" type="image/png" href="/img/bus.png" />
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" />
 
@@ -15,30 +15,31 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="header.css">
 
 </head>
 
-<body class="routepage">
-    <header class="routesCard">
-
-        <nav class="navbar d-flex justify-content-center p-3" role="navigation">
-            <ul class="d-flex flex-row justify-content-around p-0">
-                <li>
-                    <a href="/profile"><i class="fas fa-home nav-link"></i></a>
-                </li>
-    
-               
-                <li class="vehicles d-flex align-items-center"><a class="btn m-2" href="/commuterRail">Commuter
-                        Rail</a></li>
-                <li class="vehicles d-flex align-items-center"><a class="btn m-2" href="/bus">Bus</a></li>
-                <li>
-                    <a href="/logout"><i class="fas fa-sign-out-alt nav-link"></i></a>
-                </li>
-                </div>
-            </ul>
+<body class="bg-secondary">
+    <header>
+        <div class="subway-header-banner">
+            <h1>Subways</h1>
+        </div>
+        <div class="clear"></div>
+        <nav class="d-flex justify-content-center">
+            <ul>
+                <li><a href="/profile">Home</a></li>
+                <li><a href="/subway">Subway</a></li>
+                <li><a href="/commuterRail">Commuter Rail</a></li>
+                <li><a href="/bus">Bus</a></li>
+                <li><a href="/logout">Logout</a></li>
+                <ul>
         </nav>
-    
-        <div class=" d-flex justify-content-center mt-3">
+    </header>
+
+
+    <div class=" d-flex justify-content-center mt-3">
+        <div class="col-md-6">
+
             <ul class=" d-flex flex-wrap">
                 <%for (let route of subwayroutes) { %>
                     <li class="vehicles">
@@ -53,13 +54,29 @@
                     </li>
                     <% } %>
             </ul>
-    
         </div>
 
-    </header>
-
+    </div>
 
     <!-- Custom scripts -->
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js">
+        /* ========================================== 
+    scrollTop() >= 300
+    Should be equal the the height of the header
+    ========================================== */
+
+        $(window).scroll(function () {
+            if ($(window).scrollTop() >= 300) {
+                $('nav').addClass('fixed-header');
+                $('nav div').addClass('visible-title');
+            }
+            else {
+                $('nav').removeClass('fixed-header');
+                $('nav div').removeClass('visible-title');
+            }
+        });
+
+    </script>
 
     <!-- bootstrap -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
