@@ -86,6 +86,14 @@ i{
     color: white;
 }
 
+.map a{
+    background: rgb(255, 255, 255);
+    border-radius: 5%;
+    border-style: none;
+    color: black;
+}
+
+
 .vehicles a:hover{
     transform: scale(1.06);
     background: black;

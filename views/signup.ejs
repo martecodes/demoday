@@ -59,14 +59,19 @@
     </div>
 
     <script type="text/javascript">
-        navigator.geolocation.getCurrentPosition(function (position) {
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
-            const lat = document.querySelector('.lat')
-            const lng = document.querySelector('.lng')
-            lat.value = latitude
-            lng.value = longitude
-        })
+
+        if(!navigator.geolocation){
+            alert('Please allow location access')
+        }else{
+            navigator.geolocation.getCurrentPosition(function (position) {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+                const lat = document.querySelector('.lat')
+                const lng = document.querySelector('.lng')
+                lat.value = latitude
+                lng.value = longitude
+            })
+        }
     </script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
