@@ -1,8 +1,4 @@
-
-
 function weatherApi(){
-
-
     fetch('/latlng')
         .then(res => res.json())
         .then(latlng => {

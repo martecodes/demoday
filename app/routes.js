@@ -4,15 +4,20 @@ module.exports = function (app, passport, db) {
   const railRoutes = require("../railroutes.js")
   const busRoutes = require("../busroutes.js")
 
-  //routes ===============================================================
+  /*
+    ======================================================================
+    Routes
+    ======================================================================
+  */
 
-  // show the home page (will also have our login links)
+  //Homepage =============================================================
   app.get("/", function (req, res) {
     res.render("index.ejs");
   });
+  //======================================================================
 
+  //Leaflet Fetch ========================================================
   app.get("/vehicles/:routeid", (req, res) => {
-    
     fetch(`https://api-v3.mbta.com/vehicles?filter%5Broute%5D=${req.params.routeid}`, {
       headers: {
         "x-api-key": "6c7e8dcb17e44647ac1b58bdfd77e11a",
@@ -25,7 +30,6 @@ module.exports = function (app, passport, db) {
   });
 
   app.get("/profileMap", (req, res) => {
-
     fetch(`https://api-v3.mbta.com/vehicles`, {
       headers: {
         "x-api-key": "6c7e8dcb17e44647ac1b58bdfd77e11a",
@@ -36,7 +40,6 @@ module.exports = function (app, passport, db) {
         res.send(data)
       });
   });
-
 
   app.get("/stopsLocation/:stopsId", (req, res) => {
     fetch(`https://api-v3.mbta.com/stops?filter%5Broute%5D=${req.params.stopsId}`, {
@@ -52,7 +55,14 @@ module.exports = function (app, passport, db) {
         console.log(`error ${err}`)
       });
   })
-  // PROFILE SECTION =========================
+  //======================================================================
+
+
+  /*
+    ======================================================================
+    Profile render
+    ======================================================================
+  */
   app.get("/profile", isLoggedIn, async function (req, res) {
     const favorites = await db
       .collection("favorites")
@@ -63,9 +73,14 @@ module.exports = function (app, passport, db) {
       favorites: favorites[0].routesName.sort()
     });
   });
+  //======================================================================
 
+  /*
+    ======================================================================
+    Render's page with leaflet and route user clicked
+    ======================================================================
+  */
   app.get("/route/:routeid", isLoggedIn, function (req, res) {
-  
     db.collection("messages")
       .find()
       .toArray((err, result) => {
@@ -76,17 +91,20 @@ module.exports = function (app, passport, db) {
         });
       });
   });
-
-  app.get("/vehicles", isLoggedIn, function (req, res) {
-    res.render("vehicles.ejs", {
-      user: req.user,
-    });
-  });
-
+  /*
+      ======================================================================
+      weather fetch
+      ======================================================================
+    */
   app.get("/latlng", isLoggedIn, function (req, res) {
      res.send(req.user)
   });
 
+  /*
+    ======================================================================
+    Render Subway, Commuter Rail, and Bus page
+    ======================================================================
+  */
   app.get("/subway", isLoggedIn, async function (req, res) {
     const favorites = await db
       .collection("favorites")
@@ -122,6 +140,13 @@ module.exports = function (app, passport, db) {
       busroutes: busRoutes
     });
   });
+  //======================================================================
+
+  /*
+    ======================================================================
+    Like and unlike function
+    ======================================================================
+  */
   app.put('/routeLikes', (req, res) => {
     db.collection('favorites')
       .findOneAndUpdate({ email: req.user.local.email }, {
@@ -135,7 +160,6 @@ module.exports = function (app, passport, db) {
         if (err) return res.send(err)
         res.send(result)
       })
-    console.log('like');
   })
 
   app.put('/routeUnLikes', (req, res) => {
@@ -151,7 +175,6 @@ module.exports = function (app, passport, db) {
         if (err) return res.send(err)
         res.send(result)
       })
-    console.log('unlike');
   })
 
   // LOGOUT ==============================
@@ -166,7 +189,6 @@ module.exports = function (app, passport, db) {
   // AUTHENTICATE (FIRST LOGIN) ==================================================
   // =============================================================================
 
-  // locally --------------------------------
   // LOGIN ===============================
   // show the login form
   app.get("/login", function (req, res) {
