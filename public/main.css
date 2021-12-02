@@ -10,6 +10,13 @@
     background-repeat:repeat;
 }
 
+
+.profileView{
+    height: 80vh;
+}
+.favoritesView{
+    height: 50vh;
+}
 .profilepage{
     background-image: url('./img/profilepage.jpg');
     background-size: cover;
