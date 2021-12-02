@@ -80,7 +80,7 @@ i{
 
 
 .vehicles a{
-    background: rgb(0, 0, 0);
+    background: rgba(18,72,120, 0.8);
     border-radius: 5%;
     border-style: none;
     color: white;
