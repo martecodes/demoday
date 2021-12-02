@@ -1,12 +1,10 @@
 # My Transpo
-App that tracks your local bus current location 
-(3rd Draft)
-![Screenshot 2021-11-22 103921](https://user-images.githubusercontent.com/88953222/142890490-728952d5-3308-44e8-9ab0-046705cb95a2.png)
+An application providing users with access to a live feed of current MBTA public transportation locations.
+![demo](https://user-images.githubusercontent.com/88953222/144494741-3e12b1a7-aa61-46c2-8054-2371f51718f2.png)
 
 
 
-
-How it's made Tech used: HTML, CSS, JavaScript, Bootstrap, Node.js, Express, MongoDB. Using these tools to create one of my favorite projects. Tracking the GPS IP to get live location of the Bus while you wait. 
+How it's made Tech used: HTML, CSS, JavaScript, Bootstrap, Node.js, Express, MongoDB, and Leaflet. Using these tools to create one of my favorite projects. Using the MBTA API to find the all public transportation Lat and Lng. I was able to apply it to Leaflet map. 
 
 Lesson Learned No matter what your experience level, being an engineer means continuously learning. Learned a lot about GeoLocation.
 
