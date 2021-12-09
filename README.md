@@ -1,5 +1,6 @@
 # My Transpo
 An application providing users with access to a live feed of current MBTA public transportation locations.
+Checkout the preview <a href="https://mytranspo.herokuapp.com/">Here</a>!
 ![demo](https://user-images.githubusercontent.com/88953222/144494741-3e12b1a7-aa61-46c2-8054-2371f51718f2.png)
 
 
